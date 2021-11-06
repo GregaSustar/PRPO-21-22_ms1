@@ -3,7 +3,18 @@ package si.fri.prpo.polnilnice.entitete;
 import javax.persistence.*;
 import java.util.ArrayList;
 
-@Entity
+@Entity(name = "uporabnik")
+@NamedQueries(value =
+        {
+                @NamedQuery(name = "Uporabnik.getAll",
+                            query = "SELECT u FROM uporabnik u"),
+                @NamedQuery(name = "Uporabnik.getAllWithTermin",
+                        query = "SELECT u FROM uporabnik u WHERE u.rezervacija IS NOT NULL"),
+                @NamedQuery(name = "Uporabnik.getAllLastniki",
+                        query = "SELECT u FROM uporabnik u WHERE u.polnilnice IS NOT EMPTY"),
+                @NamedQuery(name = "Uporabnik.findByUporabniskoIme",
+                        query = "SELECT u FROM uporabnik u WHERE u.uporabnisko_ime = ?1")
+        })
 public class Uporabnik {
 
     @Id

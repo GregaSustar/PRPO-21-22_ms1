@@ -4,7 +4,18 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-@Entity
+@Entity(name = "polnilnica")
+@NamedQueries(value =
+        {
+                @NamedQuery(name = "Polnilnica.getAll",
+                            query = "SELECT p FROM polnilnica p"),
+                @NamedQuery(name = "Polnilnica.getAllInMesto",
+                        query = "SELECT p FROM polnilnica p WHERE p.lokacija.mesto = ?1"),
+                @NamedQuery(name = "Polnilnica.getAllWithoutTerminiAfterTime",
+                        query = "SELECT p FROM polnilnica p WHERE (SELECT t FROM termin t WHERE t.zacetek_termina > ?1) IS EMPTY"),
+                @NamedQuery(name = "Polnilnica.getAllOfLastnik",
+                        query = "SELECT p FROM polnilnica p WHERE p.lastnik.id = ?1")
+        })
 public class Polnilnica {
 
     @Id

@@ -7,7 +7,15 @@ import java.time.LocalDateTime;
 @NamedQueries(value =
         {
                 @NamedQuery(name = "Termin.getAll",
-                        query = "SELECT t FROM termin t"),
+                        query = "SELECT t FROM termin t ORDER BY t.zacetek_termina"),
+                @NamedQuery(name = "Termin.getAllForPolnilnica",
+                        query = "SELECT t FROM termin t WHERE t.polnilnica.id = ?1 ORDER BY t.zacetek_termina"),
+                @NamedQuery(name = "Termin.getAllForUporabnik",
+                        query = "SELECT t FROM termin t WHERE t.uporabnik.id = ?1 ORDER BY t.zacetek_termina"),
+                @NamedQuery(name = "Termin.getAllBeforeTime",
+                        query = "SELECT t FROM termin t WHERE t.konec_termina < ?1 ORDER BY t.zacetek_termina"),
+                @NamedQuery(name = "Termin.getAllAfterTime",
+                        query = "SELECT t FROM termin t WHERE t.zacetek_termina > ?1 ORDER BY t.zacetek_termina")
         })
 public class Termin {
 

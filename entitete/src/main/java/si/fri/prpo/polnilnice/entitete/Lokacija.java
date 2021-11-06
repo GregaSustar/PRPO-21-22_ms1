@@ -9,11 +9,11 @@ import javax.persistence.*;
                             query = "SELECT l FROM lokacija l"),
                 @NamedQuery(name = "Lokacija.getAllOrderedByDrzava",
                             query = "SELECT l FROM lokacija l ORDER BY l.drzava"),
-                @NamedQuery(name = "Lokacija.findByPostnaSt",
+                @NamedQuery(name = "Lokacija.getAllByPostnaSt",
                             query = "SELECT l FROM lokacija l WHERE l.postna_st = ?1"),
-                @NamedQuery(name = "Lokacija.findByDrzava",
+                @NamedQuery(name = "Lokacija.getAllByDrzava",
                             query = "SELECT l FROM lokacija l WHERE l.drzava = ?1"),
-                @NamedQuery(name = "Lokacija.findByNaslov",
+                @NamedQuery(name = "Lokacija.finByNaslov",
                             query = "SELECT l FROM lokacija l WHERE l.naslov = ?1")
         })
 public class Lokacija {
