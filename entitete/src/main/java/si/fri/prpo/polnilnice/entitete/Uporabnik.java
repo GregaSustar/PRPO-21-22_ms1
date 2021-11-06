@@ -27,6 +27,8 @@ public class Uporabnik {
 
     private String uporabnisko_ime;
 
+    private String email;
+
     @OneToMany
     @JoinColumn(name = "polnilnice")
     private ArrayList<Polnilnica> polnilnice;
@@ -65,6 +67,14 @@ public class Uporabnik {
 
     public void setUporabnisko_ime(String uporabnisko_ime) {
         this.uporabnisko_ime = uporabnisko_ime;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public ArrayList<Polnilnica> getPolnilnice() {
