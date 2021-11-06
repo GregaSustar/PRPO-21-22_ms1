@@ -1,0 +1,10 @@
+kumuluzee:
+  name: prpo-polnilnice
+  version: 1.0.0
+  env:
+    name: dev
+  datasources:
+    - jndi-name: jdbc/PolnilniceDS
+      connection-url: jdbc:postgresql://localhost:5432/polnilnice
+      username: postgres
+      password: postgres
