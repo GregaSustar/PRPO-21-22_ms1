@@ -22,10 +22,22 @@ public class JPAServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         List<Uporabnik> uporabniki = uporabnikiZrno.getUporabniki();
-
+        List<Uporabnik> uporabnikiCriteria = uporabnikiZrno.getUporabnikiCriteria();
         // izpis uporabnikov na spletno stran
+
+        resp.getWriter().println("Vsi uporabniki, z namedQuery");
+        resp.getWriter().println("_______________________________");
         for (Uporabnik u : uporabniki) {
             resp.getWriter().println(u.toString());
         }
+
+        resp.getWriter().println("\n\n");
+
+        resp.getWriter().println("Vsi uporabniki, z Criteria API");
+        resp.getWriter().println("_______________________________");
+        for (Uporabnik u : uporabnikiCriteria) {
+            resp.getWriter().println(u.toString());
+        }
+
     }
 }
