@@ -29,10 +29,6 @@ public class Uporabnik {
 
     private String email;
 
-    @OneToMany
-    @Transient
-    private ArrayList<Polnilnica> polnilnice;
-
     @OneToOne
     @JoinColumn(name = "termin_id")
     private Termin rezervacija;
@@ -77,19 +73,23 @@ public class Uporabnik {
         this.email = email;
     }
 
-    public ArrayList<Polnilnica> getPolnilnice() {
-        return polnilnice;
-    }
-
-    public void setPolnilnice(ArrayList<Polnilnica> polnilnice) {
-        this.polnilnice = polnilnice;
-    }
-
     public Termin getRezervacija() {
         return rezervacija;
     }
 
     public void setRezervacija(Termin rezervacija) {
         this.rezervacija = rezervacija;
+    }
+
+    @Override
+    public String toString() {
+        return "Uporabnik{" +
+                "id=" + id +
+                ", ime='" + ime + '\'' +
+                ", priimek='" + priimek + '\'' +
+                ", uporabnisko_ime='" + uporabnisko_ime + '\'' +
+                ", email='" + email + '\'' +
+                ", rezervacija=" + rezervacija +
+                '}';
     }
 }
