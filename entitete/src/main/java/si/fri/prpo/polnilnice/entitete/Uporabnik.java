@@ -11,7 +11,7 @@ import java.util.ArrayList;
                 @NamedQuery(name = "Uporabnik.getAllWithTermin",
                         query = "SELECT u FROM uporabnik u WHERE u.rezervacija IS NOT NULL"),
                 @NamedQuery(name = "Uporabnik.getAllLastniki",
-                        query = "SELECT u FROM uporabnik u WHERE (SELECT p FROM polnilnica p WHERE p.lastnik = u) IS NOT EMPTY"),
+                        query = "SELECT u FROM uporabnik u, polnilnica p WHERE p.lastnik = u"),
                 @NamedQuery(name = "Uporabnik.findByUporabniskoIme",
                         query = "SELECT u FROM uporabnik u WHERE u.uporabnisko_ime = ?1")
         })

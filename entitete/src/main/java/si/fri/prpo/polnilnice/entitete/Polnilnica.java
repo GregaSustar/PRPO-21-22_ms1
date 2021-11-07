@@ -12,7 +12,7 @@ import java.util.ArrayList;
                 @NamedQuery(name = "Polnilnica.getAllInMesto",
                         query = "SELECT p FROM polnilnica p WHERE p.lokacija.mesto = ?1"),
                 @NamedQuery(name = "Polnilnica.getAllWithoutTerminiAfterTime",
-                        query = "SELECT p FROM polnilnica p WHERE (SELECT t FROM termin t WHERE t.zacetek_termina > ?1) IS EMPTY"),
+                        query = "SELECT p FROM polnilnica p, termin t WHERE t.zacetek_termina > ?1"),
                 @NamedQuery(name = "Polnilnica.getAllOfLastnik",
                         query = "SELECT p FROM polnilnica p WHERE p.lastnik.id = ?1")
         })
@@ -33,7 +33,7 @@ public class Polnilnica {
     private LocalTime cas_zaprtja;
 
     @ManyToOne
-    @JoinColumn(name = "uporabnik_id")
+    @JoinColumn(name = "lastnik_id")
     private Uporabnik lastnik;
 
     @Transient
