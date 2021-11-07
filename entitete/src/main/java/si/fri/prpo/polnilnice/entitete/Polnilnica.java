@@ -1,7 +1,7 @@
 package si.fri.prpo.polnilnice.entitete;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 @Entity(name = "polnilnica")
@@ -20,7 +20,7 @@ public class Polnilnica {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     private String ime;
 
@@ -28,16 +28,15 @@ public class Polnilnica {
     @JoinColumn(name = "lokacija_id")
     private Lokacija lokacija;
 
-    private LocalDateTime cas_odprtja;
+    private LocalTime cas_odprtja;
 
-    private LocalDateTime cas_zaprtja;
+    private LocalTime cas_zaprtja;
 
     @ManyToOne
     @JoinColumn(name = "uporabnik_id")
     private Uporabnik lastnik;
 
-    @OneToMany
-    @JoinColumn(name = "termini")
+    @Transient
     private ArrayList<Termin> termini;
 
     private Double cena_polnjenja;
@@ -46,11 +45,11 @@ public class Polnilnica {
 
     private String vrsta_toka;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -70,19 +69,19 @@ public class Polnilnica {
         this.lokacija = lokacija;
     }
 
-    public LocalDateTime getCas_odprtja() {
+    public LocalTime getCas_odprtja() {
         return cas_odprtja;
     }
 
-    public void setCas_odprtja(LocalDateTime cas_odprtja) {
+    public void setCas_odprtja(LocalTime cas_odprtja) {
         this.cas_odprtja = cas_odprtja;
     }
 
-    public LocalDateTime getCas_zaprtja() {
+    public LocalTime getCas_zaprtja() {
         return cas_zaprtja;
     }
 
-    public void setCas_zaprtja(LocalDateTime cas_zaprtja) {
+    public void setCas_zaprtja(LocalTime cas_zaprtja) {
         this.cas_zaprtja = cas_zaprtja;
     }
 

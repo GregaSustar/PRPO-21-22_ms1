@@ -21,7 +21,7 @@ public class Termin {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @OneToOne
     @JoinColumn(name = "uporabnik_id")
@@ -35,11 +35,11 @@ public class Termin {
 
     private LocalDateTime konec_termina;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

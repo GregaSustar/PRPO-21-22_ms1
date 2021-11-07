@@ -11,7 +11,7 @@ import java.util.ArrayList;
                 @NamedQuery(name = "Uporabnik.getAllWithTermin",
                         query = "SELECT u FROM uporabnik u WHERE u.rezervacija IS NOT NULL"),
                 @NamedQuery(name = "Uporabnik.getAllLastniki",
-                        query = "SELECT u FROM uporabnik u WHERE u.polnilnice IS NOT EMPTY"),
+                        query = "SELECT u FROM uporabnik u WHERE (SELECT p FROM polnilnica p WHERE p.lastnik = u) IS NOT EMPTY"),
                 @NamedQuery(name = "Uporabnik.findByUporabniskoIme",
                         query = "SELECT u FROM uporabnik u WHERE u.uporabnisko_ime = ?1")
         })
@@ -19,7 +19,7 @@ public class Uporabnik {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     private String ime;
 
@@ -30,18 +30,18 @@ public class Uporabnik {
     private String email;
 
     @OneToMany
-    @JoinColumn(name = "polnilnice")
+    @Transient
     private ArrayList<Polnilnica> polnilnice;
 
     @OneToOne
     @JoinColumn(name = "termin_id")
     private Termin rezervacija;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
