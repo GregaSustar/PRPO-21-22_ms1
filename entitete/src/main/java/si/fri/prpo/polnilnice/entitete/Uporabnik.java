@@ -6,14 +6,23 @@ import java.util.ArrayList;
 @Entity(name = "uporabnik")
 @NamedQueries(value =
         {
+                // READ Uporabnik
                 @NamedQuery(name = "Uporabnik.getAll",
                             query = "SELECT u FROM uporabnik u"),
                 @NamedQuery(name = "Uporabnik.getAllWithTermin",
-                        query = "SELECT u FROM uporabnik u WHERE u.rezervacija IS NOT NULL"),
+                            query = "SELECT u FROM uporabnik u WHERE u.rezervacija IS NOT NULL"),
                 @NamedQuery(name = "Uporabnik.getAllLastniki",
-                        query = "SELECT u FROM uporabnik u, polnilnica p WHERE p.lastnik = u"),
-                @NamedQuery(name = "Uporabnik.findByUporabniskoIme",
-                        query = "SELECT u FROM uporabnik u WHERE u.uporabnisko_ime = ?1")
+                            query = "SELECT u FROM uporabnik u, polnilnica p WHERE p.lastnik = u"),
+                @NamedQuery(name = "Uporabnik.getByUporabniskoIme",
+                            query = "SELECT u FROM uporabnik u WHERE u.uporabnisko_ime = :upr_ime"),
+
+                // UPDATE Uporabnik
+                @NamedQuery(name = "Uporabnik.updateUporabnik",
+                            query = "UPDATE uporabnik u SET u.ime = :ime, u.priimek = :priimek, u.email = :email, u.uporabnisko_ime = :upr_ime, u.rezervacija = :rez WHERE u.id = :id"),
+
+                // DELETE Uporabnik
+                @NamedQuery(name = "Uporabnik.deleteUporabnik",
+                            query = "DELETE FROM uporabnik u WHERE u.id = :id")
         })
 public class Uporabnik {
 
@@ -25,6 +34,7 @@ public class Uporabnik {
 
     private String priimek;
 
+    @Column(unique = true)
     private String uporabnisko_ime;
 
     private String email;
