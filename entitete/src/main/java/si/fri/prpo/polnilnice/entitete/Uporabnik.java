@@ -15,11 +15,11 @@ import java.util.ArrayList;
                             query = "SELECT u FROM uporabnik u, polnilnica p WHERE p.lastnik = u"),
                 @NamedQuery(name = "Uporabnik.getByUporabniskoIme",
                             query = "SELECT u FROM uporabnik u WHERE u.uporabnisko_ime = :upr_ime"),
-
+                @NamedQuery(name = "Uporabnik.getByID",
+                            query = "SELECT u FROM uporabnik u WHERE u.id = :id"),
                 // UPDATE Uporabnik
                 @NamedQuery(name = "Uporabnik.updateUporabnik",
                             query = "UPDATE uporabnik u SET u.ime = :ime, u.priimek = :priimek, u.email = :email, u.uporabnisko_ime = :upr_ime, u.rezervacija = :rez WHERE u.id = :id"),
-
                 // DELETE Uporabnik
                 @NamedQuery(name = "Uporabnik.deleteUporabnik",
                             query = "DELETE FROM uporabnik u WHERE u.id = :id")

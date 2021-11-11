@@ -46,6 +46,10 @@ public class UporabnikiZrno {
         return (Uporabnik) q.getSingleResult();
     }
 
+    public Uporabnik getUporabnik(long id) {
+        return null;
+    }
+
     public List<Uporabnik> getUporabniki() {
         Query q = em.createNamedQuery("Uporabnik.getAll");
         return q.getResultList();

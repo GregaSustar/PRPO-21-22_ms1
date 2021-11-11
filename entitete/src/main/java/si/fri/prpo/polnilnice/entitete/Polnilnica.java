@@ -43,7 +43,8 @@ public class Polnilnica {
 
     private Double moc_v_kW;
 
-    private String vrsta_toka;
+    @Enumerated(EnumType.STRING)
+    private Tok vrsta_toka;
 
     public Long getId() {
         return id;
@@ -117,11 +118,15 @@ public class Polnilnica {
         this.moc_v_kW = moc_v_kW;
     }
 
-    public String getVrsta_toka() {
+    public Tok getVrsta_toka() {
         return vrsta_toka;
     }
 
-    public void setVrsta_toka(String vrsta_toka) {
+    public void setVrsta_toka(Tok vrsta_toka) {
         this.vrsta_toka = vrsta_toka;
+    }
+
+    private enum Tok {
+        AC, DC
     }
 }
