@@ -7,14 +7,29 @@ import java.util.ArrayList;
 @Entity(name = "polnilnica")
 @NamedQueries(value =
         {
+                // READ Polnilnica
                 @NamedQuery(name = "Polnilnica.getAll",
                             query = "SELECT p FROM polnilnica p"),
                 @NamedQuery(name = "Polnilnica.getAllInMesto",
-                        query = "SELECT p FROM polnilnica p WHERE p.lokacija.mesto = ?1"),
-                @NamedQuery(name = "Polnilnica.getAllWithoutTerminiAfterTime",
-                        query = "SELECT p FROM polnilnica p, termin t WHERE t.zacetek_termina > ?1"),
+                            query = "SELECT p FROM polnilnica p WHERE p.lokacija.mesto = :mesto"),
                 @NamedQuery(name = "Polnilnica.getAllOfLastnik",
-                        query = "SELECT p FROM polnilnica p WHERE p.lastnik.id = ?1")
+                            query = "SELECT p FROM polnilnica p WHERE p.lastnik.id = :id"),
+                @NamedQuery(name = "Polnilnica.getByID",
+                            query = "SELECT p FROM polnilnica p WHERE p.id = :id"),
+                // UPDATE Polnilnica
+                @NamedQuery(name = "Polnilnica.updatePolnilnica",
+                            query = "UPDATE polnilnica p SET p.ime = :ime, " +
+                                    "p.lastnik = :lastnik, " +
+                                    "p.lokacija = :lokacija, " +
+                                    "p.cena_polnjenja = :cena, " +
+                                    "p.moc_v_kW = :moc, " +
+                                    "p.vrsta_toka = :tok, " +
+                                    "p.cas_odprtja = :cas_odprtja, " +
+                                    "p.cas_zaprtja = :cas_zaprtja " +
+                                    "WHERE p.id = :id"),
+                // DELETE Polnilnica
+                @NamedQuery(name = "Polnilnica.deletePolnilnica",
+                            query = "DELETE FROM polnilnica p WHERE p.id = :id")
         })
 public class Polnilnica {
 

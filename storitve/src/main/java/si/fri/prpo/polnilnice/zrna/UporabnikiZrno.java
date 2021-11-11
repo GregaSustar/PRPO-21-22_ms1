@@ -43,15 +43,23 @@ public class UporabnikiZrno {
 
     public Uporabnik getUporabnik(String upr_ime) {
         Query q = em.createNamedQuery("Uporabnik.getByUporabniskoIme");
+        q.setParameter("upr_ime", upr_ime);
         return (Uporabnik) q.getSingleResult();
     }
 
     public Uporabnik getUporabnik(long id) {
-        return null;
+        Query q = em.createNamedQuery("Uporabnik.getByID");
+        q.setParameter("id", id);
+        return (Uporabnik) q.getSingleResult();
     }
 
     public List<Uporabnik> getUporabniki() {
         Query q = em.createNamedQuery("Uporabnik.getAll");
+        return q.getResultList();
+    }
+
+    public List<Uporabnik> getAllWithTermin() {
+        Query q = em.createNamedQuery("Uporabnik.getAllWithTermin");
         return q.getResultList();
     }
 
@@ -65,7 +73,7 @@ public class UporabnikiZrno {
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
-    public long updateUporabnik(Uporabnik u) {
+    public int updateUporabnik(Uporabnik u) {
         Query q = em.createNamedQuery("Uporabnik.updateUporabnik");
         q.setParameter("id", u.getId())
          .setParameter("ime", u.getIme())
@@ -77,8 +85,9 @@ public class UporabnikiZrno {
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
-    public long deleteUporabnik(long id) {
+    public int deleteUporabnik(long id) {
         Query q = em.createNamedQuery("Uporabnik.deleteUporabnik");
+        q.setParameter("id", id);
         return q.setParameter("id", id).executeUpdate();
     }
 }
