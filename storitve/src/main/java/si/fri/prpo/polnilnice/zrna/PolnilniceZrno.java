@@ -7,14 +7,16 @@ import si.fri.prpo.polnilnice.entitete.Uporabnik;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.logging.Logger;
 
-@ApplicationScoped
+@RequestScoped
 public class PolnilniceZrno {
 
     @PersistenceContext(unitName = "polnilnice-jpa")
@@ -46,18 +48,18 @@ public class PolnilniceZrno {
     }
 
     public List<Polnilnica> getPolnilnice() {
-        Query q = em.createNamedQuery("Polnilnica.getAll");
+        TypedQuery<Polnilnica> q = em.createNamedQuery("Polnilnica.getAll", Polnilnica.class);
         return q.getResultList();
     }
 
     public List<Polnilnica> getPolnilnice(Uporabnik lastnik) {
-        Query q = em.createNamedQuery("Polnilnica.getAllOfLastnik");
+        TypedQuery<Polnilnica> q = em.createNamedQuery("Polnilnica.getAllOfLastnik", Polnilnica.class);
         q.setParameter("id", lastnik.getId());
         return q.getResultList();
     }
 
     public List<Polnilnica> getPolnilnice(Lokacija lokacija) {
-        Query q = em.createNamedQuery("Polnilnica.getAllInMesto");
+        TypedQuery<Polnilnica> q = em.createNamedQuery("Polnilnica.getAllInMesto", Polnilnica.class);
         q.setParameter("mesto", lokacija.getMesto());
         return q.getResultList();
     }

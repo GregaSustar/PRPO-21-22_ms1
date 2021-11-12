@@ -5,16 +5,25 @@ import javax.persistence.*;
 @Entity(name = "lokacija")
 @NamedQueries(value =
         {
+                // READ Lokacija
                 @NamedQuery(name = "Lokacija.getAll",
                             query = "SELECT l FROM lokacija l"),
-                @NamedQuery(name = "Lokacija.getAllOrderedByDrzava",
-                            query = "SELECT l FROM lokacija l ORDER BY l.drzava"),
                 @NamedQuery(name = "Lokacija.getAllByPostnaSt",
-                            query = "SELECT l FROM lokacija l WHERE l.postna_st = ?1"),
+                            query = "SELECT l FROM lokacija l WHERE l.postna_st = :postna_st"),
                 @NamedQuery(name = "Lokacija.getAllByDrzava",
-                            query = "SELECT l FROM lokacija l WHERE l.drzava = ?1"),
-                @NamedQuery(name = "Lokacija.finByNaslov",
-                            query = "SELECT l FROM lokacija l WHERE l.naslov = ?1")
+                            query = "SELECT l FROM lokacija l WHERE l.drzava = :drzava"),
+                @NamedQuery(name = "Lokacija.findByNaslov",
+                            query = "SELECT l FROM lokacija l WHERE l.naslov = :naslov"),
+                // UPDATE Lokacija
+                @NamedQuery(name = "Lokacija.updateLokacija",
+                        query = "UPDATE lokacija l SET l.drzava = :drzava, " +
+                                "l.mesto = :mesto, " +
+                                "l.naslov = :naslov, " +
+                                "l.postna_st = :postna " +
+                                "WHERE l.id = :id"),
+                // DELETE Lokacija
+                @NamedQuery(name = "Lokacija.deleteLokacija",
+                        query = "DELETE FROM lokacija l WHERE l.id = :id")
         })
 public class Lokacija {
 

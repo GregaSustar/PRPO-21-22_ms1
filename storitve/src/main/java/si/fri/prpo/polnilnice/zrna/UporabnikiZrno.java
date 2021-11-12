@@ -5,6 +5,7 @@ import si.fri.prpo.polnilnice.entitete.Uporabnik;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -16,7 +17,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.logging.Logger;
 
-@ApplicationScoped
+@RequestScoped
 public class UporabnikiZrno {
 
     @PersistenceContext(unitName = "polnilnice-jpa")
@@ -54,12 +55,12 @@ public class UporabnikiZrno {
     }
 
     public List<Uporabnik> getUporabniki() {
-        Query q = em.createNamedQuery("Uporabnik.getAll");
+        TypedQuery<Uporabnik> q = em.createNamedQuery("Uporabnik.getAll", Uporabnik.class);
         return q.getResultList();
     }
 
     public List<Uporabnik> getAllWithTermin() {
-        Query q = em.createNamedQuery("Uporabnik.getAllWithTermin");
+        TypedQuery<Uporabnik> q = em.createNamedQuery("Uporabnik.getAllWithTermin", Uporabnik.class);
         return q.getResultList();
     }
 
@@ -88,6 +89,6 @@ public class UporabnikiZrno {
     public int deleteUporabnik(long id) {
         Query q = em.createNamedQuery("Uporabnik.deleteUporabnik");
         q.setParameter("id", id);
-        return q.setParameter("id", id).executeUpdate();
+        return q.executeUpdate();
     }
 }
