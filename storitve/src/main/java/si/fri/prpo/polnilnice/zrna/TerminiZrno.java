@@ -37,12 +37,12 @@ public class TerminiZrno {
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
-    public boolean createTermin(Termin t) {
+    public Termin createTermin(Termin t) {
         if(t != null) {
             em.persist(t);
-            return true;
+            return t;
         }
-        return false;
+        return null;
     }
 
     public Termin getTermin(Long id) {
@@ -79,12 +79,12 @@ public class TerminiZrno {
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
-    public boolean updateTermin(Long id, Termin t) {
+    public Termin updateTermin(Long id, Termin t) {
         if(getTermin(id) != null) {
             em.refresh(t);
-            return true;
+            return t;
         }
-        return false;
+        return null;
     }
 
     @Transactional(Transactional.TxType.REQUIRED)

@@ -34,7 +34,7 @@ public class Lokacija {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Polnilnica> polnilnice;
 
-    protected Lokacija() {}
+    public Lokacija() {}
 
     public Lokacija(Integer postna_st, String drzava, String mesto, String naslov) {
         this(postna_st, drzava, mesto, naslov, null);

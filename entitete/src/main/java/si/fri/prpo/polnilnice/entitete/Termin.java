@@ -36,7 +36,7 @@ public class Termin {
 
     private LocalDateTime konec_termina;
 
-    protected Termin() {}
+    public Termin() {}
 
     public Termin(Uporabnik uporabnik, Polnilnica polnilnica, LocalDateTime zacetek_termina, LocalDateTime konec_termina) {
         this.uporabnik = uporabnik;

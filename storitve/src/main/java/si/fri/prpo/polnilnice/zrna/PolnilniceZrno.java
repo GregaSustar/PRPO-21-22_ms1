@@ -34,12 +34,12 @@ public class PolnilniceZrno {
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
-    public boolean createPolnilnica(Polnilnica p) {
+    public Polnilnica createPolnilnica(Polnilnica p) {
         if(p != null) {
             em.persist(p);
-            return true;
+            return p;
         }
-        return false;
+        return null;
     }
 
     public Polnilnica getPolnilnica(Long id) {
@@ -64,12 +64,12 @@ public class PolnilniceZrno {
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
-    public boolean updatePolnilnica(Long id, Polnilnica p) {
+    public Polnilnica updatePolnilnica(Long id, Polnilnica p) {
         if(getPolnilnica(id) != null) {
             em.refresh(p);
-            return true;
+            return p;
         }
-        return false;
+        return null;
     }
 
     @Transactional(Transactional.TxType.REQUIRED)

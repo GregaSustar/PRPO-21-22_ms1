@@ -36,11 +36,31 @@ public class UpravljanjeUporabnikovZrno {
     }
 
     public Uporabnik ustvariUporabnika(UporabnikDTO uporabnikDTO) {
-        return null;
+
+        if(uporabnikDTO.getIme().isEmpty() || uporabnikDTO.getPriimek().isEmpty() || uporabnikDTO.getUporabnisko_ime().isEmpty() ||uporabnikDTO.getEmail().isEmpty()) {
+            log.info("Ne morem ustvariti uporabnika. Manjkajo obvezni podatki");
+            return null;
+        }
+
+        Uporabnik uporabnik = new Uporabnik();
+        uporabnik.setIme(uporabnikDTO.getIme());
+        uporabnik.setPriimek(uporabnikDTO.getPriimek());
+        uporabnik.setUporabnisko_ime(uporabnikDTO.getUporabnisko_ime());
+        uporabnik.setEmail(uporabnikDTO.getEmail());
+
+        return uporabnikiZrno.createUporabnik(uporabnik);
     }
 
-    public Uporabnik izbrisiUporabnika(Long uporabnikID) {
-        return null;
+    public boolean izbrisiUporabnika(Long uporabnikID) {
+
+        Uporabnik uporabnik = uporabnikiZrno.getUporabnik(uporabnikID);
+
+        if(uporabnik == null) {
+            log.info("Ne morem izbrisati uporabnika. Uporabnik z id-jem: " + uporabnikID + " ne obstaja");
+            return true;
+        }
+
+        return uporabnikiZrno.deleteUporabnik(uporabnikID);
     }
 
     public Termin dodajTerminUporabniku(Long uporabnikID, TerminDTO terminDTO) {

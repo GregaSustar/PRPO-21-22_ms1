@@ -36,12 +36,12 @@ public class UporabnikiZrno {
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
-    public boolean createUporabnik(Uporabnik u) {
+    public Uporabnik createUporabnik(Uporabnik u) {
         if(u != null) {
             em.persist(u);
-            return true;
+            return u;
         }
-        return false;
+        return null;
     }
 
     public Uporabnik getUporabnik(String upr_ime) {
@@ -74,12 +74,12 @@ public class UporabnikiZrno {
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
-    public boolean updateUporabnik(Long id, Uporabnik u) {
+    public Uporabnik updateUporabnik(Long id, Uporabnik u) {
         if(getUporabnik(id) != null) {
             em.refresh(u);
-            return true;
+            return u;
         }
-        return false;
+        return null;
     }
 
     @Transactional(Transactional.TxType.REQUIRED)

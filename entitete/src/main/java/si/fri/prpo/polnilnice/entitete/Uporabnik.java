@@ -35,7 +35,7 @@ public class Uporabnik {
     @JoinColumn(name = "termin_id")
     private Termin rezervacija;
 
-    protected Uporabnik() {}
+    public Uporabnik() {}
 
     public Uporabnik(String ime, String priimek, String uporabnisko_ime, String email) {
         this.ime = ime;

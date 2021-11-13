@@ -47,7 +47,7 @@ public class Polnilnica {
     @Enumerated(EnumType.STRING)
     private Tok vrsta_toka;
 
-    protected Polnilnica() {}
+    public Polnilnica() {}
 
     public Polnilnica(String ime, Lokacija lokacija, LocalTime cas_odprtja, LocalTime cas_zaprtja, Uporabnik lastnik, Double cena_polnjenja, Double moc_v_kW, Tok vrsta_toka) {
         this(ime, lokacija, cas_odprtja, cas_zaprtja, lastnik, cena_polnjenja, null, moc_v_kW, vrsta_toka);

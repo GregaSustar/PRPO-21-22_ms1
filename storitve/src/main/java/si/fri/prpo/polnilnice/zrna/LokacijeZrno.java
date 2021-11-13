@@ -33,12 +33,12 @@ public class LokacijeZrno {
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
-    public boolean createLokacija(Lokacija l) {
+    public Lokacija createLokacija(Lokacija l) {
         if(l != null) {
             em.persist(l);
-            return true;
+            return l;
         }
-        return false;
+        return null;
     }
 
     public Lokacija getLokacija(Long id) {
@@ -69,12 +69,12 @@ public class LokacijeZrno {
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
-    public boolean updateLokacija(Long id, Lokacija l) {
+    public Lokacija updateLokacija(Long id, Lokacija l) {
         if(getLokacija(id) != null) {
             em.refresh(l);
-            return true;
+            return l;
         }
-        return false;
+        return null;
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
