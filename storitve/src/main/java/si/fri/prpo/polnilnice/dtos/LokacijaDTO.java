@@ -1,5 +1,9 @@
 package si.fri.prpo.polnilnice.dtos;
 
+import si.fri.prpo.polnilnice.entitete.Polnilnica;
+
+import java.util.List;
+
 public class LokacijaDTO {
 
     private Long id;
@@ -7,6 +11,7 @@ public class LokacijaDTO {
     private String drzava;
     private String mesto;
     private String naslov;
+    private List<Polnilnica> polnilnice;
 
     public Long getId() {
         return id;
@@ -46,5 +51,13 @@ public class LokacijaDTO {
 
     public void setNaslov(String naslov) {
         this.naslov = naslov;
+    }
+
+    public List<Polnilnica> getPolnilnice() {
+        return polnilnice;
+    }
+
+    public void setPolnilnice(List<Polnilnica> polnilnice) {
+        this.polnilnice = polnilnice;
     }
 }
