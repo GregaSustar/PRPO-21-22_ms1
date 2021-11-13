@@ -30,13 +30,22 @@ public class Lokacija {
 
     private String naslov;
 
+    @JoinTable
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Polnilnica> polnilnice;
+
     protected Lokacija() {}
 
     public Lokacija(Integer postna_st, String drzava, String mesto, String naslov) {
+        this(postna_st, drzava, mesto, naslov, null);
+    }
+
+    public Lokacija(Integer postna_st, String drzava, String mesto, String naslov, List<Polnilnica> polnilnice) {
         this.postna_st = postna_st;
         this.drzava = drzava;
         this.mesto = mesto;
         this.naslov = naslov;
+        this.polnilnice = polnilnice;
     }
 
     public Long getId() {
@@ -77,6 +86,14 @@ public class Lokacija {
 
     public void setNaslov(String naslov) {
         this.naslov = naslov;
+    }
+
+    public List<Polnilnica> getPolnilnice() {
+        return polnilnice;
+    }
+
+    public void setPolnilnice(List<Polnilnica> polnilnice) {
+        this.polnilnice = polnilnice;
     }
 
     @Override

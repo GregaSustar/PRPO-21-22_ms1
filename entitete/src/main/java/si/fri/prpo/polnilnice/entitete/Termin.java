@@ -92,7 +92,7 @@ public class Termin {
         str.append("id: " + getId() + ", ");
         str.append("p_id: " + getPolnilnica().getId() + ", ");
         str.append("zac_t: " + getZacetek_termina().toString() + ", ");
-        str.append("kon_t: " + getKonec_termina().toString() + ", ");
+        str.append("kon_t: " + getKonec_termina().toString());
         str.append(" }");
         return str.toString();
     }

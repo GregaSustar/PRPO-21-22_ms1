@@ -38,6 +38,10 @@ public class Polnilnica {
 
     private Double cena_polnjenja;
 
+    @JoinTable
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Termin> termini;
+
     private Double moc_v_kW;
 
     @Enumerated(EnumType.STRING)
@@ -46,12 +50,17 @@ public class Polnilnica {
     protected Polnilnica() {}
 
     public Polnilnica(String ime, Lokacija lokacija, LocalTime cas_odprtja, LocalTime cas_zaprtja, Uporabnik lastnik, Double cena_polnjenja, Double moc_v_kW, Tok vrsta_toka) {
+        this(ime, lokacija, cas_odprtja, cas_zaprtja, lastnik, cena_polnjenja, null, moc_v_kW, vrsta_toka);
+    }
+
+    public Polnilnica(String ime, Lokacija lokacija, LocalTime cas_odprtja, LocalTime cas_zaprtja, Uporabnik lastnik, Double cena_polnjenja, List<Termin> termini, Double moc_v_kW, Tok vrsta_toka) {
         this.ime = ime;
         this.lokacija = lokacija;
         this.cas_odprtja = cas_odprtja;
         this.cas_zaprtja = cas_zaprtja;
         this.lastnik = lastnik;
         this.cena_polnjenja = cena_polnjenja;
+        this.termini = termini;
         this.moc_v_kW = moc_v_kW;
         this.vrsta_toka = vrsta_toka;
     }
@@ -111,6 +120,14 @@ public class Polnilnica {
 
     public void setCena_polnjenja(Double cena_polnjenja) {
         this.cena_polnjenja = cena_polnjenja;
+    }
+
+    public List<Termin> getTermini() {
+        return termini;
+    }
+
+    public void setTermini(List<Termin> termini) {
+        this.termini = termini;
     }
 
     public Double getMoc_v_kW() {
