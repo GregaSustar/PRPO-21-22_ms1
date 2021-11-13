@@ -158,7 +158,7 @@ public class Polnilnica {
         return str.toString();
     }
 
-    private enum Tok {
+    public enum Tok {
         AC, DC
     }
 }
