@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.logging.Logger;
 
-@RequestScoped
+@ApplicationScoped
 public class TerminiZrno {
 
     @PersistenceContext(unitName = "polnilnice-jpa")

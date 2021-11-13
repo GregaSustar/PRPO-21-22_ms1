@@ -16,7 +16,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.logging.Logger;
 
-@RequestScoped
+@ApplicationScoped
 public class PolnilniceZrno {
 
     @PersistenceContext(unitName = "polnilnice-jpa")

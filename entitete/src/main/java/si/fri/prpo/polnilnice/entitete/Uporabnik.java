@@ -31,7 +31,7 @@ public class Uporabnik {
 
     private String email;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "termin_id")
     private Termin rezervacija;
 

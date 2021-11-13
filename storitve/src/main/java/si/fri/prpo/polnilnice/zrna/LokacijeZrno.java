@@ -4,6 +4,7 @@ import si.fri.prpo.polnilnice.entitete.Lokacija;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -13,7 +14,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.logging.Logger;
 
-@RequestScoped
+@ApplicationScoped
 public class LokacijeZrno {
 
     @PersistenceContext(unitName = "polnilnice-jpa")

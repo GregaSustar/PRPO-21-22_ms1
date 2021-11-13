@@ -36,11 +36,6 @@ public class Polnilnica {
     @JoinColumn(name = "lastnik_id")
     private Uporabnik lastnik;
 
-    //@Transient
-    @OneToMany
-    @JoinColumn(name = "termini")
-    private List<Termin> termini;
-
     private Double cena_polnjenja;
 
     private Double moc_v_kW;
@@ -51,16 +46,11 @@ public class Polnilnica {
     protected Polnilnica() {}
 
     public Polnilnica(String ime, Lokacija lokacija, LocalTime cas_odprtja, LocalTime cas_zaprtja, Uporabnik lastnik, Double cena_polnjenja, Double moc_v_kW, Tok vrsta_toka) {
-        this(ime, lokacija, cas_odprtja, cas_zaprtja, lastnik, null, cena_polnjenja, moc_v_kW, vrsta_toka);
-    }
-
-    public Polnilnica(String ime, Lokacija lokacija, LocalTime cas_odprtja, LocalTime cas_zaprtja, Uporabnik lastnik, List<Termin> termini, Double cena_polnjenja, Double moc_v_kW, Tok vrsta_toka) {
         this.ime = ime;
         this.lokacija = lokacija;
         this.cas_odprtja = cas_odprtja;
         this.cas_zaprtja = cas_zaprtja;
         this.lastnik = lastnik;
-        this.termini = termini;
         this.cena_polnjenja = cena_polnjenja;
         this.moc_v_kW = moc_v_kW;
         this.vrsta_toka = vrsta_toka;
@@ -114,13 +104,6 @@ public class Polnilnica {
         this.lastnik = lastnik;
     }
 
-    public List<Termin> getTermini() {
-        return termini;
-    }
-
-    public void setTermini(List<Termin> termini) {
-        this.termini = termini;
-    }
 
     public Double getCena_polnjenja() {
         return cena_polnjenja;

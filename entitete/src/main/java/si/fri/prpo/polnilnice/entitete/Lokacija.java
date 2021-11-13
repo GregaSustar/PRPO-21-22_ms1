@@ -1,6 +1,7 @@
 package si.fri.prpo.polnilnice.entitete;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity(name = "lokacija")
 @NamedQueries(value =
