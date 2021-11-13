@@ -1,7 +1,6 @@
 package si.fri.prpo.polnilnice.zrna;
 
 import si.fri.prpo.polnilnice.entitete.Lokacija;
-import si.fri.prpo.polnilnice.entitete.Termin;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -33,10 +32,16 @@ public class LokacijeZrno {
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
-    public void createLokacija(Lokacija l) {
+    public boolean createLokacija(Lokacija l) {
         if(l != null) {
             em.persist(l);
+            return true;
         }
+        return false;
+    }
+
+    public Lokacija getLokacija(Long id) {
+        return em.find(Lokacija.class, id);
     }
 
     public Lokacija getLokacija(String naslov) {
@@ -63,21 +68,21 @@ public class LokacijeZrno {
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
-    public int updateLokacija(Lokacija l) {
-        Query q = em.createNamedQuery("Lokacija.updateLokacija");
-        q.setParameter("id", l.getId())
-                .setParameter("drzava", l.getDrzava())
-                .setParameter("mesto", l.getMesto())
-                .setParameter("naslov", l.getNaslov())
-                .setParameter("postna", l.getPostna_st());
-
-        return q.executeUpdate();
+    public boolean updateLokacija(Long id, Lokacija l) {
+        if(getLokacija(id) != null) {
+            em.refresh(l);
+            return true;
+        }
+        return false;
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
-    public int deleteLokacija(long id) {
-        Query q = em.createNamedQuery("Lokacija.deleteLokacija");
-        q.setParameter("id", id);
-        return q.executeUpdate();
+    public boolean deleteLokacija(Long id) {
+        Lokacija l = getLokacija(id);
+        if(l != null) {
+            em.remove(l);
+            return true;
+        }
+        return false;
     }
 }

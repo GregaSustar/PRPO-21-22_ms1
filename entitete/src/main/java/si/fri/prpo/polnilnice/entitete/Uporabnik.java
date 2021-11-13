@@ -14,21 +14,7 @@ import java.util.ArrayList;
                 @NamedQuery(name = "Uporabnik.getAllLastniki",
                             query = "SELECT u FROM uporabnik u, polnilnica p WHERE p.lastnik = u"),
                 @NamedQuery(name = "Uporabnik.getByUporabniskoIme",
-                            query = "SELECT u FROM uporabnik u WHERE u.uporabnisko_ime = :upr_ime"),
-                @NamedQuery(name = "Uporabnik.getByID",
-                            query = "SELECT u FROM uporabnik u WHERE u.id = :id"),
-                // UPDATE Uporabnik
-                @NamedQuery(name = "Uporabnik.updateUporabnik",
-                            query = "UPDATE uporabnik u SET " +
-                                    "u.ime = :ime, " +
-                                    "u.priimek = :priimek, " +
-                                    "u.email = :email, " +
-                                    "u.uporabnisko_ime = :upr_ime, " +
-                                    "u.rezervacija = :rez " +
-                                    "WHERE u.id = :id"),
-                // DELETE Uporabnik
-                @NamedQuery(name = "Uporabnik.deleteUporabnik",
-                            query = "DELETE FROM uporabnik u WHERE u.id = :id")
+                            query = "SELECT u FROM uporabnik u WHERE u.uporabnisko_ime = :upr_ime")
         })
 public class Uporabnik {
 
@@ -99,13 +85,15 @@ public class Uporabnik {
 
     @Override
     public String toString() {
-        return "Uporabnik{" +
-                "id=" + id +
-                ", ime='" + ime + '\'' +
-                ", priimek='" + priimek + '\'' +
-                ", uporabnisko_ime='" + uporabnisko_ime + '\'' +
-                ", email='" + email + '\'' +
-                ", rezervacija=" + rezervacija +
-                '}';
+        StringBuilder str = new StringBuilder();
+        str.append("U: { ");
+        str.append("id: " + getId() + ", ");
+        str.append("ime: " + getIme() + ", ");
+        str.append("priimek: " + getPriimek() + ", ");
+        str.append("u_ime: " + getUporabnisko_ime() + ", ");
+        if(getRezervacija() != null)
+            str.append(getRezervacija().toString());
+        str.append(" }");
+        return str.toString();
     }
 }

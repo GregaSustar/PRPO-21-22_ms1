@@ -14,16 +14,6 @@ import javax.persistence.*;
                             query = "SELECT l FROM lokacija l WHERE l.drzava = :drzava"),
                 @NamedQuery(name = "Lokacija.findByNaslov",
                             query = "SELECT l FROM lokacija l WHERE l.naslov = :naslov"),
-                // UPDATE Lokacija
-                @NamedQuery(name = "Lokacija.updateLokacija",
-                        query = "UPDATE lokacija l SET l.drzava = :drzava, " +
-                                "l.mesto = :mesto, " +
-                                "l.naslov = :naslov, " +
-                                "l.postna_st = :postna " +
-                                "WHERE l.id = :id"),
-                // DELETE Lokacija
-                @NamedQuery(name = "Lokacija.deleteLokacija",
-                        query = "DELETE FROM lokacija l WHERE l.id = :id")
         })
 public class Lokacija {
 
@@ -78,5 +68,17 @@ public class Lokacija {
 
     public void setNaslov(String naslov) {
         this.naslov = naslov;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder();
+        str.append("L: { ");
+        str.append(getNaslov() + ", ");
+        str.append(getPostna_st() + ", ");
+        str.append(getMesto() + ", ");
+        str.append(getDrzava());
+        str.append(" }");
+        return str.toString();
     }
 }

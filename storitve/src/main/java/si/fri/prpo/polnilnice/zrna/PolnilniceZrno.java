@@ -35,16 +35,16 @@ public class PolnilniceZrno {
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
-    public void createPolnilnica(Polnilnica p) {
+    public boolean createPolnilnica(Polnilnica p) {
         if(p != null) {
             em.persist(p);
+            return true;
         }
+        return false;
     }
 
-    public Polnilnica getPolnilnica(long id) {
-        Query q = em.createNamedQuery("Polnilnica.getByID");
-        q.setParameter("id", id);
-        return (Polnilnica) q.getSingleResult();
+    public Polnilnica getPolnilnica(Long id) {
+        return em.find(Polnilnica.class, id);
     }
 
     public List<Polnilnica> getPolnilnice() {
@@ -65,24 +65,21 @@ public class PolnilniceZrno {
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
-    public int updatePolnilnica(Polnilnica p) {
-        Query q = em.createNamedQuery("Polnilnica.updatePolnilnica");
-        q.setParameter("ime", p.getIme())
-                .setParameter("lastnik", p.getLastnik())
-                .setParameter("lokacija", p.getLokacija())
-                .setParameter("cena", p.getCena_polnjenja())
-                .setParameter("moc", p.getMoc_v_kW())
-                .setParameter("tok", p.getVrsta_toka())
-                .setParameter("cas_odprtja", p.getCas_odprtja())
-                .setParameter("cas_zaprtja", p.getCas_zaprtja());
-
-        return q.executeUpdate();
+    public boolean updatePolnilnica(Long id, Polnilnica p) {
+        if(getPolnilnica(id) != null) {
+            em.refresh(p);
+            return true;
+        }
+        return false;
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
-    public int deletePolnilnica(long id) {
-        Query q = em.createNamedQuery("Polnilnica.deletePolnilnica");
-        q.setParameter("id", id);
-        return q.executeUpdate();
+    public boolean deletePolnilnica(Long id) {
+        Polnilnica p = getPolnilnica(id);
+        if(p != null) {
+            em.remove(p);
+            return true;
+        }
+        return false;
     }
 }

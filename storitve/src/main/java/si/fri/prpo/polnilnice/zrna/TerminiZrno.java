@@ -1,5 +1,6 @@
 package si.fri.prpo.polnilnice.zrna;
 
+import si.fri.prpo.polnilnice.entitete.Lokacija;
 import si.fri.prpo.polnilnice.entitete.Polnilnica;
 import si.fri.prpo.polnilnice.entitete.Termin;
 import si.fri.prpo.polnilnice.entitete.Uporabnik;
@@ -36,16 +37,16 @@ public class TerminiZrno {
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
-    public void createTermin(Termin t) {
+    public boolean createTermin(Termin t) {
         if(t != null) {
             em.persist(t);
+            return true;
         }
+        return false;
     }
 
-    public Termin getTermin(long id) {
-        Query q = em.createNamedQuery("Termin.getByID");
-        q.setParameter("id", id);
-        return (Termin) q.getSingleResult();
+    public Termin getTermin(Long id) {
+        return em.find(Termin.class, id);
     }
 
     public List<Termin> getTermini() {
@@ -78,21 +79,21 @@ public class TerminiZrno {
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
-    public int updateTermin(Termin t) {
-        Query q = em.createNamedQuery("Termin.updateTermin");
-        q.setParameter("id", t.getId())
-                .setParameter("uporabnik", t.getUporabnik())
-                .setParameter("polnilnica", t.getPolnilnica())
-                .setParameter("zac_termina", t.getZacetek_termina())
-                .setParameter("kon_termina", t.getKonec_termina());
-
-        return q.executeUpdate();
+    public boolean updateTermin(Long id, Termin t) {
+        if(getTermin(id) != null) {
+            em.refresh(t);
+            return true;
+        }
+        return false;
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
-    public int deleteTermin(long id) {
-        Query q = em.createNamedQuery("Termin.deleteTermin");
-        q.setParameter("id", id);
-        return q.executeUpdate();
+    public boolean deleteTermin(Long id) {
+        Termin t = getTermin(id);
+        if(t != null) {
+            em.remove(t);
+            return true;
+        }
+        return false;
     }
 }

@@ -16,19 +16,7 @@ import java.time.LocalDateTime;
                 @NamedQuery(name = "Termin.getAllBeforeTime",
                         query = "SELECT t FROM termin t WHERE t.konec_termina < :kon_termina ORDER BY t.zacetek_termina"),
                 @NamedQuery(name = "Termin.getAllAfterTime",
-                        query = "SELECT t FROM termin t WHERE t.zacetek_termina > :zac_termina ORDER BY t.zacetek_termina"),
-                @NamedQuery(name = "Termin.getByID",
-                            query = "SELECT t FROM termin t WHERE t.id = :id"),
-                // UPDATE Termin
-                @NamedQuery(name = "Termin.updateTermin",
-                        query = "UPDATE termin t SET t.uporabnik = :uporabnik, " +
-                                "t.polnilnica = :polnilnica, " +
-                                "t.zacetek_termina = :zac_termina, " +
-                                "t.konec_termina = :kon_termina " +
-                                "WHERE t.id = :id"),
-                // DELETE Termin
-                @NamedQuery(name = "Termin.deleteTermin",
-                        query = "DELETE FROM termin t WHERE t.id = :id")
+                        query = "SELECT t FROM termin t WHERE t.zacetek_termina > :zac_termina ORDER BY t.zacetek_termina")
         })
 public class Termin {
 
@@ -86,5 +74,17 @@ public class Termin {
 
     public void setKonec_termina(LocalDateTime konec_termina) {
         this.konec_termina = konec_termina;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder();
+        str.append("T: { ");
+        str.append("id: " + getId() + ", ");
+        str.append("p_id: " + getPolnilnica().getId() + ", ");
+        str.append("zac_t: " + getZacetek_termina().toString() + ", ");
+        str.append("kon_t: " + getKonec_termina().toString() + ", ");
+        str.append(" }");
+        return str.toString();
     }
 }

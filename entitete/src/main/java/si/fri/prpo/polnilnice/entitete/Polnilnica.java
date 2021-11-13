@@ -3,6 +3,7 @@ package si.fri.prpo.polnilnice.entitete;
 import javax.persistence.*;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "polnilnica")
 @NamedQueries(value =
@@ -13,23 +14,7 @@ import java.util.ArrayList;
                 @NamedQuery(name = "Polnilnica.getAllInMesto",
                             query = "SELECT p FROM polnilnica p WHERE p.lokacija.mesto = :mesto"),
                 @NamedQuery(name = "Polnilnica.getAllOfLastnik",
-                            query = "SELECT p FROM polnilnica p WHERE p.lastnik.id = :id"),
-                @NamedQuery(name = "Polnilnica.getByID",
-                            query = "SELECT p FROM polnilnica p WHERE p.id = :id"),
-                // UPDATE Polnilnica
-                @NamedQuery(name = "Polnilnica.updatePolnilnica",
-                            query = "UPDATE polnilnica p SET p.ime = :ime, " +
-                                    "p.lastnik = :lastnik, " +
-                                    "p.lokacija = :lokacija, " +
-                                    "p.cena_polnjenja = :cena, " +
-                                    "p.moc_v_kW = :moc, " +
-                                    "p.vrsta_toka = :tok, " +
-                                    "p.cas_odprtja = :cas_odprtja, " +
-                                    "p.cas_zaprtja = :cas_zaprtja " +
-                                    "WHERE p.id = :id"),
-                // DELETE Polnilnica
-                @NamedQuery(name = "Polnilnica.deletePolnilnica",
-                            query = "DELETE FROM polnilnica p WHERE p.id = :id")
+                            query = "SELECT p FROM polnilnica p WHERE p.lastnik.id = :id")
         })
 public class Polnilnica {
 
@@ -51,8 +36,10 @@ public class Polnilnica {
     @JoinColumn(name = "lastnik_id")
     private Uporabnik lastnik;
 
-    @Transient
-    private ArrayList<Termin> termini;
+    //@Transient
+    @OneToMany
+    @JoinColumn(name = "termini")
+    private List<Termin> termini;
 
     private Double cena_polnjenja;
 
@@ -109,11 +96,11 @@ public class Polnilnica {
         this.lastnik = lastnik;
     }
 
-    public ArrayList<Termin> getTermini() {
+    public List<Termin> getTermini() {
         return termini;
     }
 
-    public void setTermini(ArrayList<Termin> termini) {
+    public void setTermini(List<Termin> termini) {
         this.termini = termini;
     }
 
@@ -139,6 +126,18 @@ public class Polnilnica {
 
     public void setVrsta_toka(Tok vrsta_toka) {
         this.vrsta_toka = vrsta_toka;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder();
+        str.append("P: { ");
+        str.append("id: " + getId() + ", ");
+        str.append("ime: " + getIme() + ", ");
+        str.append("las_id: " + getLastnik().getId() + ", ");
+        str.append(getLokacija().toString());
+        str.append(" }");
+        return str.toString();
     }
 
     private enum Tok {

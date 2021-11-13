@@ -36,10 +36,12 @@ public class UporabnikiZrno {
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
-    public void createUporabnik(Uporabnik u) {
+    public boolean createUporabnik(Uporabnik u) {
         if(u != null) {
             em.persist(u);
+            return true;
         }
+        return false;
     }
 
     public Uporabnik getUporabnik(String upr_ime) {
@@ -48,10 +50,8 @@ public class UporabnikiZrno {
         return (Uporabnik) q.getSingleResult();
     }
 
-    public Uporabnik getUporabnik(long id) {
-        Query q = em.createNamedQuery("Uporabnik.getByID");
-        q.setParameter("id", id);
-        return (Uporabnik) q.getSingleResult();
+    public Uporabnik getUporabnik(Long id) {
+        return em.find(Uporabnik.class, id);
     }
 
     public List<Uporabnik> getUporabniki() {
@@ -74,21 +74,21 @@ public class UporabnikiZrno {
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
-    public int updateUporabnik(Uporabnik u) {
-        Query q = em.createNamedQuery("Uporabnik.updateUporabnik");
-        q.setParameter("id", u.getId())
-         .setParameter("ime", u.getIme())
-         .setParameter("priimek", u.getPriimek())
-         .setParameter("upr_ime", u.getUporabnisko_ime())
-         .setParameter("rez", u.getRezervacija());
-
-        return q.executeUpdate();
+    public boolean updateUporabnik(Long id, Uporabnik u) {
+        if(getUporabnik(id) != null) {
+            em.refresh(u);
+            return true;
+        }
+        return false;
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
-    public int deleteUporabnik(long id) {
-        Query q = em.createNamedQuery("Uporabnik.deleteUporabnik");
-        q.setParameter("id", id);
-        return q.executeUpdate();
+    public boolean deleteUporabnik(Long id) {
+        Uporabnik u = getUporabnik(id);
+        if(u != null) {
+            em.remove(u);
+            return true;
+        }
+        return false;
     }
 }
