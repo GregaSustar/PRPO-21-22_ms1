@@ -35,6 +35,16 @@ public class Uporabnik {
     @JoinColumn(name = "termin_id")
     private Termin rezervacija;
 
+    protected Uporabnik() {}
+
+    public Uporabnik(String ime, String priimek, String uporabnisko_ime, String email) {
+        this.ime = ime;
+        this.priimek = priimek;
+        this.uporabnisko_ime = uporabnisko_ime;
+        this.email = email;
+        this.rezervacija = null;
+    }
+
     public Long getId() {
         return id;
     }

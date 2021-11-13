@@ -48,6 +48,24 @@ public class Polnilnica {
     @Enumerated(EnumType.STRING)
     private Tok vrsta_toka;
 
+    protected Polnilnica() {}
+
+    public Polnilnica(String ime, Lokacija lokacija, LocalTime cas_odprtja, LocalTime cas_zaprtja, Uporabnik lastnik, Double cena_polnjenja, Double moc_v_kW, Tok vrsta_toka) {
+        this(ime, lokacija, cas_odprtja, cas_zaprtja, lastnik, null, cena_polnjenja, moc_v_kW, vrsta_toka);
+    }
+
+    public Polnilnica(String ime, Lokacija lokacija, LocalTime cas_odprtja, LocalTime cas_zaprtja, Uporabnik lastnik, List<Termin> termini, Double cena_polnjenja, Double moc_v_kW, Tok vrsta_toka) {
+        this.ime = ime;
+        this.lokacija = lokacija;
+        this.cas_odprtja = cas_odprtja;
+        this.cas_zaprtja = cas_zaprtja;
+        this.lastnik = lastnik;
+        this.termini = termini;
+        this.cena_polnjenja = cena_polnjenja;
+        this.moc_v_kW = moc_v_kW;
+        this.vrsta_toka = vrsta_toka;
+    }
+
     public Long getId() {
         return id;
     }

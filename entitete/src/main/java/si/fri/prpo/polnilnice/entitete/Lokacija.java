@@ -29,6 +29,14 @@ public class Lokacija {
 
     private String naslov;
 
+    protected Lokacija() {}
+
+    public Lokacija(Integer postna_st, String drzava, String mesto, String naslov) {
+        this.postna_st = postna_st;
+        this.drzava = drzava;
+        this.mesto = mesto;
+        this.naslov = naslov;
+    }
 
     public Long getId() {
         return id;

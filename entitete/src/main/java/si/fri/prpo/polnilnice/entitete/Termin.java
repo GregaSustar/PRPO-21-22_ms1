@@ -36,6 +36,15 @@ public class Termin {
 
     private LocalDateTime konec_termina;
 
+    protected Termin() {}
+
+    public Termin(Uporabnik uporabnik, Polnilnica polnilnica, LocalDateTime zacetek_termina, LocalDateTime konec_termina) {
+        this.uporabnik = uporabnik;
+        this.polnilnica = polnilnica;
+        this.zacetek_termina = zacetek_termina;
+        this.konec_termina = konec_termina;
+    }
+
     public Long getId() {
         return id;
     }
