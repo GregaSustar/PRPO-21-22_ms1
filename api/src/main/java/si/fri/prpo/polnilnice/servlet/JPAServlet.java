@@ -1,7 +1,9 @@
 package si.fri.prpo.polnilnice.servlet;
 
+import si.fri.prpo.polnilnice.dtos.UporabnikDTO;
 import si.fri.prpo.polnilnice.entitete.Uporabnik;
 import si.fri.prpo.polnilnice.zrna.UporabnikiZrno;
+import si.fri.prpo.polnilnice.zrna.UpravljanjeUporabnikovZrno;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -17,6 +19,9 @@ public class JPAServlet extends HttpServlet {
 
     @Inject
     private UporabnikiZrno uporabnikiZrno;
+
+    @Inject
+    private UpravljanjeUporabnikovZrno uporavljanjeUporabnikovZrno;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -39,5 +44,19 @@ public class JPAServlet extends HttpServlet {
             resp.getWriter().println(u.toString());
         }
 
+        UporabnikDTO uporabnikDTO = new UporabnikDTO();
+        uporabnikDTO.setIme("Ferdinand");
+        uporabnikDTO.setPriimek("Omega");
+        uporabnikDTO.setUporabnisko_ime("ferdiO");
+        uporabnikDTO.setEmail("ferdinand.omega@gamil.com");
+        uporavljanjeUporabnikovZrno.ustvariUporabnika(uporabnikDTO);
+
+        resp.getWriter().println();
+        resp.getWriter().println("Dodaj uporabnika");
+        resp.getWriter().println("_______________________________");
+        uporabniki = uporabnikiZrno.getUporabniki();
+        for (Uporabnik u : uporabniki) {
+            resp.getWriter().println(u.toString());
+        }
     }
 }

@@ -14,7 +14,9 @@ import java.util.ArrayList;
                 @NamedQuery(name = "Uporabnik.getAllLastniki",
                             query = "SELECT u FROM uporabnik u, polnilnica p WHERE p.lastnik = u"),
                 @NamedQuery(name = "Uporabnik.getByUporabniskoIme",
-                            query = "SELECT u FROM uporabnik u WHERE u.uporabnisko_ime = :upr_ime")
+                            query = "SELECT u FROM uporabnik u WHERE u.uporabnisko_ime = :upr_ime"),
+                @NamedQuery(name = "Uporabnik.getByEmail",
+                        query = "SELECT u FROM uporabnik u WHERE u.email = :email")
         })
 public class Uporabnik {
 
@@ -29,6 +31,7 @@ public class Uporabnik {
     @Column(unique = true)
     private String uporabnisko_ime;
 
+    @Column(unique = true)
     private String email;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -103,6 +106,8 @@ public class Uporabnik {
         str.append("u_ime: " + getUporabnisko_ime() + ", ");
         if(getRezervacija() != null)
             str.append(getRezervacija().toString());
+        else
+            str.append("null");
         str.append(" }");
         return str.toString();
     }

@@ -1,15 +1,13 @@
 package si.fri.prpo.polnilnice.zrna;
 
 import si.fri.prpo.polnilnice.entitete.Lokacija;
+import si.fri.prpo.polnilnice.entitete.Uporabnik;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.logging.Logger;
@@ -48,7 +46,13 @@ public class LokacijeZrno {
     public Lokacija getLokacija(String naslov) {
         Query q = em.createNamedQuery("Lokacija.findByNaslov");
         q.setParameter("naslov", naslov);
-        return (Lokacija) q.getSingleResult();
+
+        Lokacija result = null;
+        try {
+            result = (Lokacija) q.getSingleResult();
+        } catch (NoResultException e) {}
+
+        return result;
     }
 
     public List<Lokacija> getLokacije() {

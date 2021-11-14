@@ -6,10 +6,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -47,7 +44,25 @@ public class UporabnikiZrno {
     public Uporabnik getUporabnik(String upr_ime) {
         Query q = em.createNamedQuery("Uporabnik.getByUporabniskoIme");
         q.setParameter("upr_ime", upr_ime);
-        return (Uporabnik) q.getSingleResult();
+
+        Uporabnik result = null;
+        try {
+            result = (Uporabnik) q.getSingleResult();
+        } catch (NoResultException e) {}
+
+        return result;
+    }
+
+    public Uporabnik getUporabnikByEmail(String email) {
+        Query q = em.createNamedQuery("Uporabnik.getByEmail");
+        q.setParameter("email", email);
+
+        Uporabnik result = null;
+        try {
+            result = (Uporabnik) q.getSingleResult();
+        } catch (NoResultException e) {}
+
+        return result;
     }
 
     public Uporabnik getUporabnik(Long id) {

@@ -42,6 +42,16 @@ public class UpravljanjeUporabnikovZrno {
             return null;
         }
 
+        if(uporabnikiZrno.getUporabnik(uporabnikDTO.getUporabnisko_ime()) != null) {
+            log.info("Uporabnik s takšnim uporabniskim imenom ze obstaja. Prosim izbreite drugo uporabnisko ime.");
+            return null;
+        }
+
+        if(uporabnikiZrno.getUporabnikByEmail(uporabnikDTO.getEmail()) != null) {
+            log.info("Uporabnik s takšnim email-om že obstaja. Prosim vnesite drug email.");
+            return null;
+        }
+
         Uporabnik uporabnik = new Uporabnik();
         uporabnik.setIme(uporabnikDTO.getIme());
         uporabnik.setPriimek(uporabnikDTO.getPriimek());
@@ -57,17 +67,87 @@ public class UpravljanjeUporabnikovZrno {
 
         if(uporabnik == null) {
             log.info("Ne morem izbrisati uporabnika. Uporabnik z id-jem: " + uporabnikID + " ne obstaja");
-            return true;
+            return false;
         }
 
         return uporabnikiZrno.deleteUporabnik(uporabnikID);
     }
 
-    public Termin dodajTerminUporabniku(Long uporabnikID, TerminDTO terminDTO) {
-        return null;
+    public Uporabnik posodobiUporabnika(Long uporabnikID, UporabnikDTO uporabnikDTO) {
+
+        Uporabnik uporabnik = uporabnikiZrno.getUporabnik(uporabnikID);
+
+        if(uporabnik == null) {
+            log.info("Ne morem posodobiti uporabnika. Uporabnik z id-jem: " + uporabnikID + " ne obstaja");
+            return null;
+        }
+
+        if(!uporabnikDTO.getIme().isEmpty())
+            uporabnik.setIme(uporabnikDTO.getIme());
+
+        if(!uporabnikDTO.getPriimek().isEmpty())
+            uporabnik.setPriimek(uporabnikDTO.getPriimek());
+
+        if(!uporabnikDTO.getUporabnisko_ime().isEmpty()) {
+            if(uporabnikiZrno.getUporabnik(uporabnikDTO.getUporabnisko_ime()) != null) {
+                log.info("Uporabnik s takšnim uporabniskim imenom ze obstaja. Prosim izbreite drugo uporabnisko ime.");
+                return null;
+            }
+
+            uporabnik.setUporabnisko_ime(uporabnikDTO.getUporabnisko_ime());
+        }
+
+        if(!uporabnikDTO.getEmail().isEmpty()) {
+            Uporabnik emailCheck = uporabnikiZrno.getUporabnikByEmail(uporabnikDTO.getEmail());
+            if(emailCheck != null && emailCheck.getId().equals(uporabnikID)) {
+                log.info("Uporabnik s takšnim email-om že obstaja. Prosim vnesite drug email.");
+                return null;
+            }
+
+            uporabnik.setEmail(uporabnikDTO.getEmail());
+        }
+
+        return uporabnikiZrno.updateUporabnik(uporabnikID, uporabnik);
     }
 
-    public Termin izbrisiTerminUporabniku(Long uporabnikID, TerminDTO terminDTO) {
-        return null;
+    public Termin dodajTerminUporabniku(Long uporabnikID, TerminDTO terminDTO) {
+
+        Uporabnik uporabnik = uporabnikiZrno.getUporabnik(uporabnikID);
+        Termin termin = terminiZrno.getTermin(terminDTO.getId());
+
+        if(uporabnik == null) {
+            log.info("Ne morem dodati Termina Uporabniku. Uporabnik z id-jem: " + uporabnikID + " ne obstaja");
+            return null;
+        }
+
+        if(termin == null) {
+            log.info("Ne morem dodati Termina Uporabniku. Termin ne obstaja");
+            return null;
+        }
+
+        uporabnik.setRezervacija(termin);
+        uporabnikiZrno.updateUporabnik(uporabnikID, uporabnik);
+        termin.setUporabnik(uporabnik);
+
+        return termin;
+    }
+
+    public boolean izbrisiTerminUporabniku(Long uporabnikID) {
+
+        Uporabnik uporabnik = uporabnikiZrno.getUporabnik(uporabnikID);
+
+        if(uporabnik == null) {
+            log.info("Ne morem izbrisati Termina Uporabniku. Uporabnik z id-jem: " + uporabnikID + " ne obstaja");
+            return false;
+        }
+
+        if(uporabnik.getRezervacija() == null) {
+            log.info("Ne morem izbrisati Termina Uporabniku. Uporabnik z id-jem: " + uporabnikID + " nima rezerviranega termina ");
+            return false;
+        }
+
+        Termin termin = uporabnik.getRezervacija();
+        uporabnik.setRezervacija(null);
+        return terminiZrno.deleteTermin(termin.getId());
     }
 }
