@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -24,9 +25,6 @@ public class UpravljanjeUporabnikovZrno {
 
     @Inject
     private TerminiZrno terminiZrno;
-
-    @Inject
-    private PolnilniceZrno polnilniceZrno;
 
     @PostConstruct
     private void init() {
@@ -76,7 +74,7 @@ public class UpravljanjeUporabnikovZrno {
         return uporabnikiZrno.deleteUporabnik(uporabnikID);
     }
 
-    public Uporabnik posodobiUporabnika(Long uporabnikID, UporabnikDTO uporabnikDTO) {
+    public Uporabnik posodobiOsnovnePodatkeUporabnika(Long uporabnikID, UporabnikDTO uporabnikDTO) {
 
         Uporabnik uporabnik = uporabnikiZrno.getUporabnik(uporabnikID);
 
@@ -93,7 +91,7 @@ public class UpravljanjeUporabnikovZrno {
 
         if(!uporabnikDTO.getUporabnisko_ime().isEmpty()) {
             if(uporabnikiZrno.getUporabnik(uporabnikDTO.getUporabnisko_ime()) != null) {
-                log.info("Uporabnik s takšnim uporabniskim imenom ze obstaja. Prosim izbreite drugo uporabnisko ime.");
+                log.info("Uporabnik s takšnim uporabniskim imenom že obstaja. Prosim izbreite drugo uporabnisko ime.");
                 return null;
             }
 
@@ -113,10 +111,11 @@ public class UpravljanjeUporabnikovZrno {
         return uporabnikiZrno.updateUporabnik(uporabnikID, uporabnik);
     }
 
-    public Termin dodajTerminUporabniku(Long uporabnikID, TerminDTO terminDTO) {
+    @Transactional
+    public Termin dodajTerminUporabniku(Long uporabnikID, Long terminID) {
 
         Uporabnik uporabnik = uporabnikiZrno.getUporabnik(uporabnikID);
-        Termin termin = terminiZrno.getTermin(terminDTO.getId());
+        Termin termin = terminiZrno.getTermin(terminID);
 
         if(uporabnik == null) {
             log.info("Ne morem dodati Termina Uporabniku. Uporabnik z id-jem: " + uporabnikID + " ne obstaja");
@@ -124,17 +123,17 @@ public class UpravljanjeUporabnikovZrno {
         }
 
         if(termin == null) {
-            log.info("Ne morem dodati Termina Uporabniku. Termin ne obstaja");
+            log.info("Ne morem dodati Termina Uporabniku. Termin z id-jem: " + terminID + " ne obstaja");
             return null;
         }
 
         uporabnik.setRezervacija(termin);
         uporabnikiZrno.updateUporabnik(uporabnikID, uporabnik);
-        termin.setUporabnik(uporabnik);
 
         return termin;
     }
 
+    @Transactional
     public boolean izbrisiTerminUporabniku(Long uporabnikID) {
 
         Uporabnik uporabnik = uporabnikiZrno.getUporabnik(uporabnikID);
@@ -149,8 +148,9 @@ public class UpravljanjeUporabnikovZrno {
             return false;
         }
 
-        Termin termin = uporabnik.getRezervacija();
         uporabnik.setRezervacija(null);
-        return terminiZrno.deleteTermin(termin.getId());
+        uporabnikiZrno.updateUporabnik(uporabnikID, uporabnik);
+
+        return true;
     }
 }

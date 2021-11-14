@@ -83,9 +83,13 @@ public class TerminiZrno {
 
     @Transactional(Transactional.TxType.REQUIRED)
     public Termin updateTermin(Long id, Termin t) {
-        if(getTermin(id) != null) {
-            em.refresh(t);
-            return t;
+        Termin org_t = getTermin(id);
+        if(org_t != null) {
+            org_t.setPolnilnica(t.getPolnilnica());
+            org_t.setUporabnik(t.getUporabnik());
+            org_t.setZacetek_termina(t.getZacetek_termina());
+            org_t.setKonec_termina(t.getKonec_termina());
+            return org_t;
         }
         return null;
     }

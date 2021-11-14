@@ -68,8 +68,17 @@ public class PolnilniceZrno {
 
     @Transactional(Transactional.TxType.REQUIRED)
     public Polnilnica updatePolnilnica(Long id, Polnilnica p) {
-        if(getPolnilnica(id) != null) {
-            em.refresh(p);
+        Polnilnica org_p = getPolnilnica(id);
+        if(org_p != null) {
+            org_p.setIme(p.getIme());
+            org_p.setLastnik(p.getLastnik());
+            org_p.setLokacija(p.getLokacija());
+            org_p.setMoc_v_kW(p.getMoc_v_kW());
+            org_p.setVrsta_toka(p.getVrsta_toka());
+            org_p.setCas_odprtja(p.getCas_odprtja());
+            org_p.setCas_zaprtja(p.getCas_zaprtja());
+            org_p.setCena_polnjenja(p.getCena_polnjenja());
+            org_p.setTermini(p.getTermini());
             return p;
         }
         return null;

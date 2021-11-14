@@ -1,9 +1,11 @@
 package si.fri.prpo.polnilnice.servlet;
 
+import si.fri.prpo.polnilnice.dtos.TerminDTO;
 import si.fri.prpo.polnilnice.dtos.UporabnikDTO;
+import si.fri.prpo.polnilnice.entitete.Polnilnica;
+import si.fri.prpo.polnilnice.entitete.Termin;
 import si.fri.prpo.polnilnice.entitete.Uporabnik;
-import si.fri.prpo.polnilnice.zrna.UporabnikiZrno;
-import si.fri.prpo.polnilnice.zrna.UpravljanjeUporabnikovZrno;
+import si.fri.prpo.polnilnice.zrna.*;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -12,6 +14,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.List;
 
 @WebServlet("/servlet")
@@ -21,7 +25,19 @@ public class JPAServlet extends HttpServlet {
     private UporabnikiZrno uporabnikiZrno;
 
     @Inject
-    private UpravljanjeUporabnikovZrno uporavljanjeUporabnikovZrno;
+    private PolnilniceZrno polnilniceZrno;
+
+    @Inject
+    private UpravljanjeUporabnikovZrno upravljanjeUporabnikovZrno;
+
+    @Inject
+    private UpravljanjeTerminovZrno upravljanjeTerminovZrno;
+
+    @Inject
+    private UpravljanjePolnilnicZrno upravljanjePolnilnicZrno;
+
+    @Inject
+    private UpravljanjeLokacijZrno upravljanjeLokacijZrno;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -49,7 +65,7 @@ public class JPAServlet extends HttpServlet {
         uporabnikDTO.setPriimek("Omega");
         uporabnikDTO.setUporabnisko_ime("ferdiO");
         uporabnikDTO.setEmail("ferdinand.omega@gamil.com");
-        Uporabnik res = uporavljanjeUporabnikovZrno.ustvariUporabnika(uporabnikDTO);
+        Uporabnik res = upravljanjeUporabnikovZrno.ustvariUporabnika(uporabnikDTO);
 
         resp.getWriter().println("\n\n");
 
@@ -62,7 +78,22 @@ public class JPAServlet extends HttpServlet {
 
         resp.getWriter().println("\n\n");
 
-        //uporabnikDTO.setRezervacija();
+        TerminDTO terminDTO = new TerminDTO();
+        Polnilnica polnilnica = polnilniceZrno.getPolnilnica(1L);
+        LocalDateTime start = LocalDateTime.of(2021, Month.NOVEMBER, 14, 15, 0, 0);
+        LocalDateTime end = start.plusMinutes(30);
+        terminDTO.setUporabnik(res);
+        terminDTO.setPolnilnica(polnilnica);
+        terminDTO.setZacetek_termina(start);
+        terminDTO.setKonec_termina(end);
 
+        Termin termin = upravljanjeTerminovZrno.ustvariTermin(terminDTO);
+
+        resp.getWriter().println("Dodaj termin uporabniku");
+        resp.getWriter().println("_______________________________");
+        uporabniki = uporabnikiZrno.getUporabniki();
+        for (Uporabnik u : uporabniki) {
+            resp.getWriter().println(u.toString());
+        }
     }
 }

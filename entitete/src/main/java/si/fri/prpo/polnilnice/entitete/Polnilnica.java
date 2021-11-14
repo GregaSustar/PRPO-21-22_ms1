@@ -1,8 +1,8 @@
 package si.fri.prpo.polnilnice.entitete;
 
+
 import javax.persistence.*;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "polnilnica")
@@ -39,7 +39,7 @@ public class Polnilnica {
     private Double cena_polnjenja;
 
     @JoinTable
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Termin> termini;
 
     private Double moc_v_kW;

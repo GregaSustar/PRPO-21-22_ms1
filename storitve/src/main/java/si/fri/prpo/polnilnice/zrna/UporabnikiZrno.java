@@ -93,9 +93,14 @@ public class UporabnikiZrno {
 
     @Transactional(Transactional.TxType.REQUIRED)
     public Uporabnik updateUporabnik(Long id, Uporabnik u) {
-        if(getUporabnik(id) != null) {
-            em.refresh(u);
-            return u;
+        Uporabnik org_u = getUporabnik(id);
+        if(org_u != null) {
+            org_u.setIme(u.getIme());
+            org_u.setPriimek(u.getPriimek());
+            org_u.setEmail(u.getEmail());
+            org_u.setRezervacija(u.getRezervacija());
+            org_u.setUporabnisko_ime(u.getUporabnisko_ime());
+            return org_u;
         }
         return null;
     }

@@ -77,9 +77,14 @@ public class LokacijeZrno {
 
     @Transactional(Transactional.TxType.REQUIRED)
     public Lokacija updateLokacija(Long id, Lokacija l) {
-        if(getLokacija(id) != null) {
-            em.refresh(l);
-            return l;
+        Lokacija org_l = getLokacija(id);
+        if(org_l != null) {
+            org_l.setDrzava(l.getDrzava());
+            org_l.setMesto(l.getMesto());
+            org_l.setNaslov(l.getNaslov());
+            org_l.setPostna_st(l.getPostna_st());
+            org_l.setPolnilnice(l.getPolnilnice());
+            return org_l;
         }
         return null;
     }
