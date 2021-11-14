@@ -6,11 +6,14 @@ import si.fri.prpo.polnilnice.entitete.Termin;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 public class UpravljanjeTerminovZrno {
 
     private static final Logger log = Logger.getLogger(UporabnikiZrno.class.getName());
+
+    private static final UUID uuid = UUID.randomUUID();
 
     @Inject
     private UporabnikiZrno uporabnikiZrno;
@@ -23,12 +26,12 @@ public class UpravljanjeTerminovZrno {
 
     @PostConstruct
     private void init() {
-        log.info("Initialized: " + UpravljanjeTerminovZrno.class.getName());
+        log.info("Initialized: " + UpravljanjeTerminovZrno.class.getName() + ", UUID: " + uuid);
     }
 
     @PreDestroy
     private void destroy() {
-        log.info("Destroying: " + UpravljanjeTerminovZrno.class.getName());
+        log.info("Destroying: " + UpravljanjeTerminovZrno.class.getName() + ", UUID: " + uuid);
     }
 
     public Termin ustvariTermin(TerminDTO terminDTO) {

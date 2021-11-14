@@ -49,14 +49,20 @@ public class JPAServlet extends HttpServlet {
         uporabnikDTO.setPriimek("Omega");
         uporabnikDTO.setUporabnisko_ime("ferdiO");
         uporabnikDTO.setEmail("ferdinand.omega@gamil.com");
-        uporavljanjeUporabnikovZrno.ustvariUporabnika(uporabnikDTO);
+        Uporabnik res = uporavljanjeUporabnikovZrno.ustvariUporabnika(uporabnikDTO);
 
-        resp.getWriter().println();
+        resp.getWriter().println("\n\n");
+
         resp.getWriter().println("Dodaj uporabnika");
         resp.getWriter().println("_______________________________");
         uporabniki = uporabnikiZrno.getUporabniki();
         for (Uporabnik u : uporabniki) {
             resp.getWriter().println(u.toString());
         }
+
+        resp.getWriter().println("\n\n");
+
+        //uporabnikDTO.setRezervacija();
+
     }
 }

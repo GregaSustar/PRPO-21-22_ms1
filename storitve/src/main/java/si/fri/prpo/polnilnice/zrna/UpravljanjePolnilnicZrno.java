@@ -10,11 +10,14 @@ import si.fri.prpo.polnilnice.entitete.Uporabnik;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 public class UpravljanjePolnilnicZrno {
 
     private static final Logger log = Logger.getLogger(UporabnikiZrno.class.getName());
+
+    private static final UUID uuid = UUID.randomUUID();
 
     @Inject
     private UporabnikiZrno uporabnikiZrno;
@@ -27,12 +30,12 @@ public class UpravljanjePolnilnicZrno {
 
     @PostConstruct
     private void init() {
-        log.info("Initialized: " + UpravljanjePolnilnicZrno.class.getName());
+        log.info("Initialized: " + UpravljanjePolnilnicZrno.class.getName() + ", UUID: " + uuid);
     }
 
     @PreDestroy
     private void destroy() {
-        log.info("Destroying: " + UpravljanjePolnilnicZrno.class.getName());
+        log.info("Destroying: " + UpravljanjePolnilnicZrno.class.getName() + ", UUID: " + uuid);
     }
 
     public Polnilnica ustvariPolnilnico(PolnilnicaDTO polnilnicaDTO) {

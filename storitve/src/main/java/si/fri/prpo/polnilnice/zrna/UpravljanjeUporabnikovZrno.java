@@ -9,12 +9,15 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 @ApplicationScoped
 public class UpravljanjeUporabnikovZrno {
 
     private static final Logger log = Logger.getLogger(UporabnikiZrno.class.getName());
+
+    private static final UUID uuid = UUID.randomUUID();
 
     @Inject
     private UporabnikiZrno uporabnikiZrno;
@@ -27,17 +30,17 @@ public class UpravljanjeUporabnikovZrno {
 
     @PostConstruct
     private void init() {
-        log.info("Initialized: " + UpravljanjeUporabnikovZrno.class.getName());
+        log.info("Initialized: " + UpravljanjeUporabnikovZrno.class.getName() + ", UUID: " + uuid);
     }
 
     @PreDestroy
     private void destroy() {
-        log.info("Destroying: " + UpravljanjeUporabnikovZrno.class.getName());
+        log.info("Destroying: " + UpravljanjeUporabnikovZrno.class.getName() + ", UUID: " + uuid);
     }
 
     public Uporabnik ustvariUporabnika(UporabnikDTO uporabnikDTO) {
 
-        if(uporabnikDTO.getIme().isEmpty() || uporabnikDTO.getPriimek().isEmpty() || uporabnikDTO.getUporabnisko_ime().isEmpty() ||uporabnikDTO.getEmail().isEmpty()) {
+        if(uporabnikDTO.getIme().isEmpty() || uporabnikDTO.getPriimek().isEmpty() || uporabnikDTO.getUporabnisko_ime().isEmpty() || uporabnikDTO.getEmail().isEmpty()) {
             log.info("Ne morem ustvariti uporabnika. Manjkajo obvezni podatki");
             return null;
         }

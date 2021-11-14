@@ -10,6 +10,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.persistence.*;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 @ApplicationScoped
@@ -20,14 +21,16 @@ public class LokacijeZrno {
 
     private static final Logger log = Logger.getLogger(UporabnikiZrno.class.getName());
 
+    private static final UUID uuid = UUID.randomUUID();
+
     @PostConstruct
     private void init() {
-        log.info("Initialized: " + UporabnikiZrno.class.getName());
+        log.info("Initialized: " + UporabnikiZrno.class.getName() + ", UUID: " + uuid);
     }
 
     @PreDestroy
     private void destroy() {
-        log.info("Destroying: " + UporabnikiZrno.class.getName());
+        log.info("Destroying: " + UporabnikiZrno.class.getName() + ", UUID: " + uuid);
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
