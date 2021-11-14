@@ -25,11 +25,9 @@ public class Termin {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "uporabnik_id")
     private Uporabnik uporabnik;
 
     @ManyToOne
-    @JoinColumn(name = "polnilnica_id")
     private Polnilnica polnilnica;
 
     private LocalDateTime zacetek_termina;

@@ -26,6 +26,6 @@ ALTER SEQUENCE termin_id_seq RESTART WITH 1;
 
 INSERT INTO termin (uporabnik_id, polnilnica_id, zacetek_termina, konec_termina) VALUES (3, 1, '2021-11-05T10:15:30', '2021-11-05T10:45:30');
 INSERT INTO polnilnica_termin(polnilnica_id, termini_id) VALUES (1, 1);
-UPDATE uporabnik SET termin_id = 1 WHERE id = 3;
+UPDATE uporabnik SET rezervacija_id = 1 WHERE id = 3;
 
 

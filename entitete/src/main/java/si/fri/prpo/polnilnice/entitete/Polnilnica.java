@@ -25,7 +25,6 @@ public class Polnilnica {
     private String ime;
 
     @ManyToOne
-    @JoinColumn(name = "lokacija_id")
     private Lokacija lokacija;
 
     private LocalTime cas_odprtja;
@@ -33,13 +32,12 @@ public class Polnilnica {
     private LocalTime cas_zaprtja;
 
     @ManyToOne
-    @JoinColumn(name = "lastnik_id")
     private Uporabnik lastnik;
 
     private Double cena_polnjenja;
 
     @JoinTable
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Termin> termini;
 
     private Double moc_v_kW;

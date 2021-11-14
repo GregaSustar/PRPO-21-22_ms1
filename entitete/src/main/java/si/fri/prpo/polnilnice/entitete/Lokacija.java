@@ -31,7 +31,7 @@ public class Lokacija {
     private String naslov;
 
     @JoinTable
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Polnilnica> polnilnice;
 
     public Lokacija() {}

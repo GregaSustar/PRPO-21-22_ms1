@@ -26,6 +26,9 @@ public class UpravljanjeUporabnikovZrno {
     @Inject
     private TerminiZrno terminiZrno;
 
+    @Inject
+    private UpravljanjeTerminovZrno upravljanjeTerminovZrno;
+
     @PostConstruct
     private void init() {
         log.info("Initialized: " + UpravljanjeUporabnikovZrno.class.getName() + ", UUID: " + uuid);
@@ -71,6 +74,7 @@ public class UpravljanjeUporabnikovZrno {
             return false;
         }
 
+        upravljanjeTerminovZrno.izbrisiTermin(uporabnik.getRezervacija().getId());
         return uporabnikiZrno.deleteUporabnik(uporabnikID);
     }
 

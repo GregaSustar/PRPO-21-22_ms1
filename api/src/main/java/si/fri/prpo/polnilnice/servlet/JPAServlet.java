@@ -95,5 +95,14 @@ public class JPAServlet extends HttpServlet {
         for (Uporabnik u : uporabniki) {
             resp.getWriter().println(u.toString());
         }
+
+        upravljanjeUporabnikovZrno.izbrisiUporabnika(res.getId());
+
+        resp.getWriter().println("izbris uporabnika");
+        resp.getWriter().println("_______________________________");
+        uporabniki = uporabnikiZrno.getUporabniki();
+        for (Uporabnik u : uporabniki) {
+            resp.getWriter().println(u.toString());
+        }
     }
 }
