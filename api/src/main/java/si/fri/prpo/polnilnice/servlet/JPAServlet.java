@@ -96,6 +96,8 @@ public class JPAServlet extends HttpServlet {
             resp.getWriter().println(u.toString());
         }
 
+        resp.getWriter().println("\n\n");
+
         upravljanjeUporabnikovZrno.izbrisiUporabnika(res.getId());
 
         resp.getWriter().println("izbris uporabnika");
@@ -104,5 +106,21 @@ public class JPAServlet extends HttpServlet {
         for (Uporabnik u : uporabniki) {
             resp.getWriter().println(u.toString());
         }
+
+        resp.getWriter().println("\n\n");
+
+        upravljanjeTerminovZrno.izbrisiTermin(1L);
+
+        resp.getWriter().println("izbris termin");
+        resp.getWriter().println("_______________________________");
+        uporabniki = uporabnikiZrno.getUporabniki();
+        for (Uporabnik u : uporabniki) {
+            resp.getWriter().println(u.toString());
+        }
+
+
+        upravljanjePolnilnicZrno.izbrisiPolnilnico(1L);
+
+        upravljanjeLokacijZrno.izbrisiLokacijo(1L);
     }
 }
