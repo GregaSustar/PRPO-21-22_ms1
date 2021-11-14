@@ -1,9 +1,9 @@
 -- Insert Uporabnik
 ALTER SEQUENCE uporabnik_id_seq RESTART WITH 1;
 
-INSERT INTO uporabnik (ime, priimek, email, uporabnisko_ime) VALUES ('Davorin', 'Alfa', 'alfaD', 'davorin.alfa@hotmail.com');
-INSERT INTO uporabnik (ime, priimek, email, uporabnisko_ime) VALUES ('Friderik', 'Beta', 'fridB', 'friderik.beta@gmail.com');
-INSERT INTO uporabnik (ime, priimek, email, uporabnisko_ime) VALUES ('Bonifacij', 'Gama', 'BonG', 'bonifacij.gama@yahoo.com');
+INSERT INTO uporabnik (ime, priimek, email, uporabnisko_ime) VALUES ('Davorin', 'Alfa', 'davorin.alfa@hotmail.com', 'alfaD');
+INSERT INTO uporabnik (ime, priimek, email, uporabnisko_ime) VALUES ('Friderik', 'Beta', 'friderik.beta@gmail.com', 'fridB');
+INSERT INTO uporabnik (ime, priimek, email, uporabnisko_ime) VALUES ('Bonifacij', 'Gama', 'bonifacij.gama@yahoo.com', 'BonG');
 
 -- Insert Lokacija
 ALTER SEQUENCE lokacija_id_seq RESTART WITH 1;

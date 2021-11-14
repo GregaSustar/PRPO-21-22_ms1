@@ -104,6 +104,7 @@ public class Uporabnik {
         str.append("ime: " + getIme() + ", ");
         str.append("priimek: " + getPriimek() + ", ");
         str.append("u_ime: " + getUporabnisko_ime() + ", ");
+        str.append("email: " + getEmail() + ", ");
         if(getRezervacija() != null)
             str.append(getRezervacija().toString());
         else
