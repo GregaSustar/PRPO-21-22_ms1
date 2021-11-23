@@ -1,7 +1,11 @@
 package si.fri.prpo.polnilnice.entitete;
 
 
+import si.fri.prpo.polnilnice.adapters.TerminAdapter;
+import si.fri.prpo.polnilnice.adapters.UporabnikAdapter;
+
 import javax.json.bind.annotation.JsonbProperty;
+import javax.json.bind.annotation.JsonbTypeAdapter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalTime;
@@ -26,6 +30,7 @@ public class Polnilnica {
 
     private String ime;
 
+    @JsonbProperty(value = "lokacija")
     @ManyToOne
     private Lokacija lokacija;
 
@@ -33,18 +38,22 @@ public class Polnilnica {
 
     private LocalTime cas_zaprtja;
 
+    @JsonbProperty(value = "lastnik")
+    @JsonbTypeAdapter(UporabnikAdapter.class)
     @ManyToOne
     private Uporabnik lastnik;
 
     private Double cena_polnjenja;
 
     @JsonbProperty(value = "termini", nillable = true)
+    @JsonbTypeAdapter(TerminAdapter.class)
     @JoinTable
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Termin> termini;
 
     private Double moc_v_kW;
 
+    @JsonbProperty(value = "vrsta_toka")
     @Enumerated(EnumType.STRING)
     private Tok vrsta_toka;
 

@@ -1,6 +1,10 @@
 package si.fri.prpo.polnilnice.entitete;
 
+import si.fri.prpo.polnilnice.adapters.PolnilnicaAdapter;
+import si.fri.prpo.polnilnice.adapters.UporabnikAdapter;
+
 import javax.json.bind.annotation.JsonbProperty;
+import javax.json.bind.annotation.JsonbTypeAdapter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -27,10 +31,12 @@ public class Termin {
     private Long id;
 
     @JsonbProperty("uporabnik")
+    @JsonbTypeAdapter(UporabnikAdapter.class)
     @OneToOne
     private Uporabnik uporabnik;
 
     @JsonbProperty("polnilnica")
+    @JsonbTypeAdapter(PolnilnicaAdapter.class)
     @ManyToOne
     private Polnilnica polnilnica;
 
