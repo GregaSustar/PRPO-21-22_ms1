@@ -1,8 +1,7 @@
-package si.fri.prpo.polnilnice.viri;
+package si.fri.prpo.polnilnice.v1.viri;
 
 import si.fri.prpo.polnilnice.entitete.Uporabnik;
 import si.fri.prpo.polnilnice.zrna.UporabnikiZrno;
-import si.fri.prpo.polnilnice.zrna.UpravljanjeUporabnikovZrno;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

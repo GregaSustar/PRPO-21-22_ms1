@@ -1,9 +1,7 @@
 package si.fri.prpo.polnilnice.entitete;
 
-import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.List;
 
 @Entity(name = "lokacija")
@@ -33,7 +31,7 @@ public class Lokacija {
 
     private String naslov;
 
-    @JsonbProperty(value = "polnilnice", nillable = true)
+    @JsonbTransient
     @JoinTable
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Polnilnica> polnilnice;

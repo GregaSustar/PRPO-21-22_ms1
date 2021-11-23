@@ -1,4 +1,4 @@
-package si.fri.prpo.polnilnice.app.v1;
+package si.fri.prpo.polnilnice.v1;
 
 import javax.ws.rs.ApplicationPath;
 
