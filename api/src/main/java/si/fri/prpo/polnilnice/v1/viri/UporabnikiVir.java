@@ -1,7 +1,9 @@
 package si.fri.prpo.polnilnice.v1.viri;
 
+import si.fri.prpo.polnilnice.dtos.UporabnikDTO;
 import si.fri.prpo.polnilnice.entitete.Uporabnik;
 import si.fri.prpo.polnilnice.zrna.UporabnikiZrno;
+import si.fri.prpo.polnilnice.zrna.UpravljanjeUporabnikovZrno;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -18,6 +20,9 @@ public class UporabnikiVir {
 
     @Inject
     private UporabnikiZrno uporabnikiZrno;
+
+    @Inject
+    private UpravljanjeUporabnikovZrno upravljanjeUporabnikovZrno;
 
     @GET
     public Response vrniUporabnike(){
@@ -40,27 +45,45 @@ public class UporabnikiVir {
 
     @Path("/{id}")
     @PUT
-    public Response posodobiUporabnika(@PathParam(value = "id") Long id, Uporabnik u) {
+    /*public Response posodobiUporabnika(@PathParam(value = "id") Long id, Uporabnik u) {
         return Response
                 .status(Response.Status.OK)
                 .entity(uporabnikiZrno.updateUporabnik(id, u))
                 .build();
+    }*/
+    public Response posodobiUporabnika(@PathParam(value = "id") Long id, UporabnikDTO u) {
+        return Response
+                .status(Response.Status.OK)
+                .entity(upravljanjeUporabnikovZrno.posodobiOsnovnePodatkeUporabnika(id, u))
+                .build();
     }
 
     @POST
-    public Response vstaviUporabnika(Uporabnik u) {
+    /*public Response vstaviUporabnika(Uporabnik u) {
         return Response
                 .status(Response.Status.OK)
                 .entity(uporabnikiZrno.createUporabnik(u))
+                .build();
+    }*/
+    public Response vstaviUporabnika(UporabnikDTO u) {
+        return Response
+                .status(Response.Status.OK)
+                .entity(upravljanjeUporabnikovZrno.ustvariUporabnika(u))
                 .build();
     }
 
     @Path("/{id}")
     @DELETE
-    public Response izbrisiUporabnika(@PathParam(value = "id") Long id) {
+    /*public Response izbrisiUporabnika(@PathParam(value = "id") Long id) {
         return Response
                 .status(Response.Status.OK)
                 .entity(uporabnikiZrno.deleteUporabnik(id))
+                .build();
+    }*/
+    public Response izbrisiUporabnika(@PathParam(value = "id") Long id) {
+        return Response
+                .status(Response.Status.OK)
+                .entity(upravljanjeUporabnikovZrno.izbrisiUporabnika(id))
                 .build();
     }
 }
