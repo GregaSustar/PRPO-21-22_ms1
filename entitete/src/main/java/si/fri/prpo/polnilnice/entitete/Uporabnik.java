@@ -1,5 +1,10 @@
 package si.fri.prpo.polnilnice.entitete;
 
+import si.fri.prpo.polnilnice.adapters.TerminAdapter;
+
+import javax.json.bind.annotation.JsonbProperty;
+import javax.json.bind.annotation.JsonbTransient;
+import javax.json.bind.annotation.JsonbTypeAdapter;
 import javax.persistence.*;
 import java.util.ArrayList;
 
@@ -34,6 +39,8 @@ public class Uporabnik {
     @Column(unique = true)
     private String email;
 
+    @JsonbProperty(value = "rezervacija", nillable = true)
+    @JsonbTypeAdapter(TerminAdapter.class)
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private Termin rezervacija;
 

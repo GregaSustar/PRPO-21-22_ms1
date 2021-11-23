@@ -1,7 +1,9 @@
 package si.fri.prpo.polnilnice.entitete;
 
 
+import javax.json.bind.annotation.JsonbProperty;
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -36,6 +38,7 @@ public class Polnilnica {
 
     private Double cena_polnjenja;
 
+    @JsonbProperty(value = "termini", nillable = true)
     @JoinTable
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Termin> termini;

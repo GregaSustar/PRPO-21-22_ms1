@@ -1,6 +1,8 @@
 package si.fri.prpo.polnilnice.entitete;
 
+import javax.json.bind.annotation.JsonbProperty;
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity(name = "termin")
@@ -24,9 +26,11 @@ public class Termin {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonbProperty("uporabnik")
     @OneToOne
     private Uporabnik uporabnik;
 
+    @JsonbProperty("polnilnica")
     @ManyToOne
     private Polnilnica polnilnica;
 

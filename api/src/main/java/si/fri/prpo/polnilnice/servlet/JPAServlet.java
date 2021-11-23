@@ -119,8 +119,8 @@ public class JPAServlet extends HttpServlet {
         }
 
 
-        upravljanjePolnilnicZrno.izbrisiPolnilnico(1L);
+        //upravljanjePolnilnicZrno.izbrisiPolnilnico(1L);
 
-        upravljanjeLokacijZrno.izbrisiLokacijo(1L);
+        //upravljanjeLokacijZrno.izbrisiLokacijo(1L);
     }
 }
