@@ -1,7 +1,9 @@
 package si.fri.prpo.polnilnice.v1.viri;
 
+import si.fri.prpo.polnilnice.dtos.TerminDTO;
 import si.fri.prpo.polnilnice.entitete.Termin;
 import si.fri.prpo.polnilnice.zrna.TerminiZrno;
+import si.fri.prpo.polnilnice.zrna.UpravljanjeTerminovZrno;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -18,6 +20,9 @@ public class TerminiVir {
 
     @Inject
     private TerminiZrno terminiZrno;
+
+    @Inject
+    private UpravljanjeTerminovZrno upravljanjeTerminovZrno;
 
     @GET
     public Response vrniTermine(){
@@ -39,19 +44,31 @@ public class TerminiVir {
     }
 
     @POST
-    public Response vstaviTermin(Termin t) {
+    /*public Response vstaviTermin(Termin t) {
         return Response
                 .status(Response.Status.OK)
                 .entity(terminiZrno.createTermin(t))
+                .build();
+    }*/
+    public Response vstaviTermin(TerminDTO t) {
+        return Response
+                .status(Response.Status.OK)
+                .entity(upravljanjeTerminovZrno.ustvariTermin(t))
                 .build();
     }
 
     @Path("/{id}")
     @DELETE
-    public Response izbrisiTermin(@PathParam(value = "id") Long id) {
+    /*public Response izbrisiTermin(@PathParam(value = "id") Long id) {
         return Response
                 .status(Response.Status.OK)
                 .entity(terminiZrno.deleteTermin(id))
+                .build();
+    }*/
+    public Response izbrisiTermin(@PathParam(value = "id") Long id) {
+        return Response
+                .status(Response.Status.OK)
+                .entity(upravljanjeTerminovZrno.izbrisiTermin(id))
                 .build();
     }
 }
