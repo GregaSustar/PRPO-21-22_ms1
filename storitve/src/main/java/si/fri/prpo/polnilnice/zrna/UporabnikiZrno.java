@@ -1,5 +1,6 @@
 package si.fri.prpo.polnilnice.zrna;
 
+import si.fri.prpo.polnilnice.anotacije.BeleziKlice;
 import si.fri.prpo.polnilnice.entitete.Uporabnik;
 
 import javax.annotation.PostConstruct;
@@ -35,6 +36,7 @@ public class UporabnikiZrno {
         log.info("Destroying: " + UporabnikiZrno.class.getName() + ", UUID: " + uuid);
     }
 
+    @BeleziKlice
     @Transactional(Transactional.TxType.REQUIRED)
     public Uporabnik createUporabnik(Uporabnik u) {
         if(u != null) {
@@ -68,10 +70,12 @@ public class UporabnikiZrno {
         return result;
     }
 
+    @BeleziKlice
     public Uporabnik getUporabnik(Long id) {
         return em.find(Uporabnik.class, id);
     }
 
+    @BeleziKlice
     public List<Uporabnik> getUporabniki() {
         TypedQuery<Uporabnik> q = em.createNamedQuery("Uporabnik.getAll", Uporabnik.class);
         return q.getResultList();
@@ -91,6 +95,7 @@ public class UporabnikiZrno {
         return tq.getResultList();
     }
 
+    @BeleziKlice
     @Transactional(Transactional.TxType.REQUIRED)
     public Uporabnik updateUporabnik(Long id, Uporabnik u) {
         Uporabnik org_u = getUporabnik(id);
@@ -105,6 +110,7 @@ public class UporabnikiZrno {
         return null;
     }
 
+    @BeleziKlice
     @Transactional(Transactional.TxType.REQUIRED)
     public boolean deleteUporabnik(Long id) {
         Uporabnik u = getUporabnik(id);
