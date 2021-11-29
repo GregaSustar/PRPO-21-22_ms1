@@ -1,5 +1,6 @@
 package si.fri.prpo.polnilnice.v1.viri;
 
+import com.kumuluz.ee.rest.beans.QueryParameters;
 import si.fri.prpo.polnilnice.dtos.TerminDTO;
 import si.fri.prpo.polnilnice.entitete.Termin;
 import si.fri.prpo.polnilnice.zrna.TerminiZrno;
@@ -8,15 +9,20 @@ import si.fri.prpo.polnilnice.zrna.UpravljanjeTerminovZrno;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
+import javax.ws.rs.core.UriInfo;
+import java.util.List;
 
 @Path("termini")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @ApplicationScoped
 public class TerminiVir {
+
+    @Context
+    protected UriInfo uriInfo;
 
     @Inject
     private TerminiZrno terminiZrno;
@@ -26,9 +32,12 @@ public class TerminiVir {
 
     @GET
     public Response vrniTermine(){
-        ArrayList<Termin> termini = (ArrayList<Termin>) terminiZrno.getTermini();
+        QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
+        List<Termin> termini = terminiZrno.getTermini(query);
+        Long terminiCount = terminiZrno.getTerminiCount(query);
         return Response
                 .status(Response.Status.OK)
+                .header("X-Total-Count", terminiCount)
                 .entity(termini)
                 .build();
     }

@@ -1,6 +1,9 @@
 package si.fri.prpo.polnilnice.zrna;
 
+import com.kumuluz.ee.rest.beans.QueryParameters;
+import com.kumuluz.ee.rest.utils.JPAUtils;
 import si.fri.prpo.polnilnice.entitete.Lokacija;
+import si.fri.prpo.polnilnice.entitete.Termin;
 import si.fri.prpo.polnilnice.entitete.Uporabnik;
 
 import javax.annotation.PostConstruct;
@@ -61,6 +64,15 @@ public class LokacijeZrno {
     public List<Lokacija> getLokacije() {
         TypedQuery<Lokacija> q = em.createNamedQuery("Lokacija.getAll", Lokacija.class);
         return q.getResultList();
+    }
+
+    // get lokacije with query parameters
+    public List<Lokacija> getLokacije(QueryParameters query) {
+        return JPAUtils.queryEntities(em, Lokacija.class, query);
+    }
+
+    public Long getLokacijeCount(QueryParameters query) {
+        return JPAUtils.queryEntitiesCount(em, Lokacija.class, query);
     }
 
     public List<Lokacija> getLokacije(Integer postna_st) {

@@ -1,5 +1,6 @@
 package si.fri.prpo.polnilnice.v1.viri;
 
+import com.kumuluz.ee.rest.beans.QueryParameters;
 import si.fri.prpo.polnilnice.dtos.PolnilnicaDTO;
 import si.fri.prpo.polnilnice.entitete.Polnilnica;
 import si.fri.prpo.polnilnice.zrna.PolnilniceZrno;
@@ -8,15 +9,20 @@ import si.fri.prpo.polnilnice.zrna.UpravljanjePolnilnicZrno;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
+import javax.ws.rs.core.UriInfo;
+import java.util.List;
 
 @Path("polnilnice")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @ApplicationScoped
 public class PolnilniceVir {
+
+    @Context
+    protected UriInfo uriInfo;
 
     @Inject
     private PolnilniceZrno polnilniceZrno;
@@ -26,9 +32,12 @@ public class PolnilniceVir {
 
     @GET
     public Response vrniPolnilnice(){
-        ArrayList<Polnilnica> polnilnice = (ArrayList<Polnilnica>) polnilniceZrno.getPolnilnice();
+        QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
+        List<Polnilnica> polnilnice = polnilniceZrno.getPolnilnice(query);
+        Long polnilniceCount = polnilniceZrno.getPolnilniceCount(query);
         return Response
                 .status(Response.Status.OK)
+                .header("X-Total-Count", polnilniceCount)
                 .entity(polnilnice)
                 .build();
     }

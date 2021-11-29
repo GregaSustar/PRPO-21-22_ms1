@@ -1,6 +1,7 @@
 package si.fri.prpo.polnilnice.zrna;
 
-import si.fri.prpo.polnilnice.entitete.Lokacija;
+import com.kumuluz.ee.rest.beans.QueryParameters;
+import com.kumuluz.ee.rest.utils.JPAUtils;
 import si.fri.prpo.polnilnice.entitete.Polnilnica;
 import si.fri.prpo.polnilnice.entitete.Termin;
 import si.fri.prpo.polnilnice.entitete.Uporabnik;
@@ -55,6 +56,15 @@ public class TerminiZrno {
     public List<Termin> getTermini() {
         TypedQuery<Termin> q = em.createNamedQuery("Termin.getAll", Termin.class);
         return q.getResultList();
+    }
+
+    // get termini with query parameters
+    public List<Termin> getTermini(QueryParameters query) {
+        return JPAUtils.queryEntities(em, Termin.class, query);
+    }
+
+    public Long getTerminiCount(QueryParameters query) {
+        return JPAUtils.queryEntitiesCount(em, Termin.class, query);
     }
 
     public List<Termin> getTermini(Polnilnica p) {

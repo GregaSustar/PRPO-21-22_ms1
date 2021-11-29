@@ -1,5 +1,6 @@
 package si.fri.prpo.polnilnice.v1.viri;
 
+import com.kumuluz.ee.rest.beans.QueryParameters;
 import si.fri.prpo.polnilnice.dtos.LokacijaDTO;
 import si.fri.prpo.polnilnice.entitete.Lokacija;
 import si.fri.prpo.polnilnice.zrna.LokacijeZrno;
@@ -8,9 +9,11 @@ import si.fri.prpo.polnilnice.zrna.UpravljanjeLokacijZrno;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
+import javax.ws.rs.core.UriInfo;
+import java.util.List;
 
 
 @Path("lokacije")
@@ -18,6 +21,9 @@ import java.util.ArrayList;
 @Consumes(MediaType.APPLICATION_JSON)
 @ApplicationScoped
 public class LokacijeVir {
+
+    @Context
+    protected UriInfo uriInfo;
 
     @Inject
     private LokacijeZrno lokacijeZrno;
@@ -27,9 +33,12 @@ public class LokacijeVir {
 
     @GET
     public Response vrniLokacije(){
-        ArrayList<Lokacija> lokacije = (ArrayList<Lokacija>) lokacijeZrno.getLokacije();
+        QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
+        List<Lokacija> lokacije = lokacijeZrno.getLokacije(query);
+        Long lokacijeCount = lokacijeZrno.getLokacijeCount(query);
         return Response
                 .status(Response.Status.OK)
+                .header("X-Total-Count", lokacijeCount)
                 .entity(lokacije)
                 .build();
     }

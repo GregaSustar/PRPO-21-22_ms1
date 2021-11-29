@@ -1,7 +1,10 @@
 package si.fri.prpo.polnilnice.zrna;
 
+import com.kumuluz.ee.rest.beans.QueryParameters;
+import com.kumuluz.ee.rest.utils.JPAUtils;
 import si.fri.prpo.polnilnice.entitete.Lokacija;
 import si.fri.prpo.polnilnice.entitete.Polnilnica;
+import si.fri.prpo.polnilnice.entitete.Termin;
 import si.fri.prpo.polnilnice.entitete.Uporabnik;
 
 import javax.annotation.PostConstruct;
@@ -52,6 +55,15 @@ public class PolnilniceZrno {
     public List<Polnilnica> getPolnilnice() {
         TypedQuery<Polnilnica> q = em.createNamedQuery("Polnilnica.getAll", Polnilnica.class);
         return q.getResultList();
+    }
+
+    // get polnilnice with query parameters
+    public List<Polnilnica> getPolnilnice(QueryParameters query) {
+        return JPAUtils.queryEntities(em, Polnilnica.class, query);
+    }
+
+    public Long getPolnilniceCount(QueryParameters query) {
+        return JPAUtils.queryEntitiesCount(em, Polnilnica.class, query);
     }
 
     public List<Polnilnica> getPolnilnice(Uporabnik lastnik) {

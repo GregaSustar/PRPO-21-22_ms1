@@ -1,5 +1,7 @@
 package si.fri.prpo.polnilnice.zrna;
 
+import com.kumuluz.ee.rest.beans.QueryParameters;
+import com.kumuluz.ee.rest.utils.JPAUtils;
 import si.fri.prpo.polnilnice.anotacije.BeleziKlice;
 import si.fri.prpo.polnilnice.entitete.Uporabnik;
 
@@ -79,6 +81,15 @@ public class UporabnikiZrno {
     public List<Uporabnik> getUporabniki() {
         TypedQuery<Uporabnik> q = em.createNamedQuery("Uporabnik.getAll", Uporabnik.class);
         return q.getResultList();
+    }
+
+    // get uporabniki with query parameters
+    public List<Uporabnik> getUporabniki(QueryParameters query) {
+        return JPAUtils.queryEntities(em, Uporabnik.class, query);
+    }
+
+    public Long getUporabnikiCount(QueryParameters query) {
+        return JPAUtils.queryEntitiesCount(em, Uporabnik.class, query);
     }
 
     public List<Uporabnik> getAllWithTermin() {
