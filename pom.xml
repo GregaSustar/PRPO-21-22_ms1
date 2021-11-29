@@ -23,6 +23,8 @@
         <kumuluzee.version>3.12.2</kumuluzee.version>
         <postgresql.version>42.2.22</postgresql.version>
         <kumuluzee-rest.version>1.5.1</kumuluzee-rest.version>
+        <kumuluzee-openapi.version>1.4.0</kumuluzee-openapi.version>
+        <kumuluzee-openapi-mp.version>1.4.0</kumuluzee-openapi-mp.version>
     </properties>
 
     <dependencyManagement>
