@@ -44,7 +44,7 @@ public class TerminiVir {
 
     @Path("/{id}")
     @GET
-    public Response vrniUporabnika(@PathParam(value = "id") Long id) {
+    public Response vrniTermin(@PathParam(value = "id") Long id) {
         Termin termin = terminiZrno.getTermin(id);
         return Response
                 .status(Response.Status.OK)

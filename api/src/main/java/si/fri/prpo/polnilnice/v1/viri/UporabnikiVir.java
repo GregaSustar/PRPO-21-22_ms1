@@ -1,6 +1,13 @@
 package si.fri.prpo.polnilnice.v1.viri;
 
 import com.kumuluz.ee.rest.beans.QueryParameters;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
+import org.eclipse.microprofile.openapi.annotations.headers.Header;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import si.fri.prpo.polnilnice.dtos.UporabnikDTO;
 import si.fri.prpo.polnilnice.entitete.Uporabnik;
 import si.fri.prpo.polnilnice.zrna.UporabnikiZrno;
@@ -31,6 +38,14 @@ public class UporabnikiVir {
     @Inject
     private UpravljanjeUporabnikovZrno upravljanjeUporabnikovZrno;
 
+
+    @Operation(summary = "Pridobi podatke o vseh uporabnikih", description = "Vrne podatke o vseh uporabnikih.")
+    @APIResponses({
+            @APIResponse(description = "Seznam uporabnikov",
+                    responseCode = "200",
+                    content = @Content(schema = @Schema(implementation = Uporabnik.class, type = SchemaType.ARRAY)),
+                    headers = {@Header(name = "X-Total-Count", description = "Število vseh uporabnikov v DB")})
+    })
     @GET
     public Response vrniUporabnike(){
         QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
@@ -43,6 +58,15 @@ public class UporabnikiVir {
                 .build();
     }
 
+
+    @Operation(summary = "Pridobi podatke o uporabniku z ID-jem 'id'", description = "Vrne podatke o uporabniku z podanim ID-jem.")
+    @APIResponses({
+            @APIResponse(description = "Podatki o uporabniku",
+                    responseCode = "200",
+                    content = @Content(schema = @Schema(implementation = Uporabnik.class))),
+            @APIResponse(description = "Uporabnik not found",
+                    responseCode = "404")
+    })
     @Path("/{id}")
     @GET
     public Response vrniUporabnika(@PathParam(value = "id") Long id) {
