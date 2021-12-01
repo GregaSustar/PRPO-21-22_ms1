@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.util.UUID;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 @ApplicationScoped
 public class UpravljanjeUporabnikovZrno {
@@ -53,6 +54,11 @@ public class UpravljanjeUporabnikovZrno {
 
         if(uporabnikiZrno.getUporabnikByEmail(uporabnikDTO.getEmail()) != null) {
             log.info("Uporabnik s takšnim email-om že obstaja. Prosim vnesite drug email.");
+            return null;
+        }
+
+        if(!checkIfValidEmail(uporabnikDTO.getEmail())) {
+            log.info("Nevaliden email naslov. Prosimo vnesite drug email.");
             return null;
         }
 
@@ -103,6 +109,11 @@ public class UpravljanjeUporabnikovZrno {
         }
 
         if(!uporabnikDTO.getEmail().isEmpty()) {
+            if(!checkIfValidEmail(uporabnikDTO.getEmail())) {
+                log.info("Nevaliden email naslov. Prosimo vnesite drug email.");
+                return null;
+            }
+
             Uporabnik emailCheck = uporabnikiZrno.getUporabnikByEmail(uporabnikDTO.getEmail());
             if(emailCheck != null && emailCheck.getId().equals(uporabnikID)) {
                 log.info("Uporabnik s takšnim email-om že obstaja. Prosim vnesite drug email.");
@@ -156,5 +167,13 @@ public class UpravljanjeUporabnikovZrno {
         uporabnikiZrno.updateUporabnik(uporabnikID, uporabnik);
 
         return true;
+    }
+
+    private boolean checkIfValidEmail(String email) {
+        String emailRegex = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
+        Pattern pat = Pattern.compile(emailRegex);
+        if (email == null)
+            return false;
+        return pat.matcher(email).matches();
     }
 }

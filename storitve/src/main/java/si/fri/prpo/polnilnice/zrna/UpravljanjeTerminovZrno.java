@@ -1,6 +1,6 @@
 package si.fri.prpo.polnilnice.zrna;
 
-import si.fri.prpo.polnilnice.dtos.PolnilnicaDTO;
+import jdk.vm.ci.meta.Local;
 import si.fri.prpo.polnilnice.dtos.TerminDTO;
 import si.fri.prpo.polnilnice.entitete.Polnilnica;
 import si.fri.prpo.polnilnice.entitete.Termin;
@@ -10,6 +10,8 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -20,6 +22,8 @@ public class UpravljanjeTerminovZrno {
     private static final Logger log = Logger.getLogger(UporabnikiZrno.class.getName());
 
     private static final UUID uuid = UUID.randomUUID();
+
+    private static final Long MAX_TERMIN_DURATION_IN_MIN = 120L;
 
     @Inject
     private UporabnikiZrno uporabnikiZrno;
@@ -72,7 +76,7 @@ public class UpravljanjeTerminovZrno {
         termin.setZacetek_termina(terminDTO.getZacetek_termina());
         termin.setKonec_termina(terminDTO.getKonec_termina());
 
-        if(!isAvailableAtPolnilnica(polnilnica, termin)) {
+        if(!isAvailableAtPolnilnica(polnilnica, termin) && hasValidInterval(termin)) {
             log.info("Termin se prekriva z drugim terminom na polnilnici");
             return null;
         }
@@ -104,6 +108,15 @@ public class UpravljanjeTerminovZrno {
         upravljanjePolnilnicZrno.izbrisiTerminIzPolnilnice(termin.getPolnilnica().getId(), terminID);
 
         return res;
+    }
+
+    public boolean hasValidInterval(Termin t) {
+        LocalDateTime from = t.getZacetek_termina();
+        LocalDateTime to = t.getKonec_termina();
+        if(to.isAfter(from) && Duration.between(from, to).toMinutes() <= MAX_TERMIN_DURATION_IN_MIN) {
+            return true;
+        }
+        return false;
     }
 
     public boolean isOverlapping(Termin t1, Termin t2) {

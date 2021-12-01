@@ -39,6 +39,9 @@ public class JPAServlet extends HttpServlet {
     @Inject
     private UpravljanjeLokacijZrno upravljanjeLokacijZrno;
 
+    @Inject
+    private RacunanjeCeneZrno racunanjeCeneZrno;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -88,6 +91,7 @@ public class JPAServlet extends HttpServlet {
         terminDTO.setKonec_termina(end);
 
         Termin termin = upravljanjeTerminovZrno.ustvariTermin(terminDTO);
+        racunanjeCeneZrno.izracunajCeno(termin);
 
         resp.getWriter().println("Dodaj termin uporabniku");
         resp.getWriter().println("_______________________________");
@@ -117,10 +121,5 @@ public class JPAServlet extends HttpServlet {
         for (Uporabnik u : uporabniki) {
             resp.getWriter().println(u.toString());
         }
-
-
-        //upravljanjePolnilnicZrno.izbrisiPolnilnico(1L);
-
-        //upravljanjeLokacijZrno.izbrisiLokacijo(1L);
     }
 }
