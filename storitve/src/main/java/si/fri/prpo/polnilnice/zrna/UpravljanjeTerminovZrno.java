@@ -113,10 +113,7 @@ public class UpravljanjeTerminovZrno {
     public boolean hasValidInterval(Termin t) {
         LocalDateTime from = t.getZacetek_termina();
         LocalDateTime to = t.getKonec_termina();
-        if(to.isAfter(from) && Duration.between(from, to).toMinutes() <= MAX_TERMIN_DURATION_IN_MIN) {
-            return true;
-        }
-        return false;
+        return to.isAfter(from) && Duration.between(from, to).toMinutes() <= MAX_TERMIN_DURATION_IN_MIN;
     }
 
     public boolean isOverlapping(Termin t1, Termin t2) {
