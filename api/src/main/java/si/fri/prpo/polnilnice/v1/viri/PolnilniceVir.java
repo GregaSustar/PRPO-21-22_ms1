@@ -1,6 +1,15 @@
 package si.fri.prpo.polnilnice.v1.viri;
 
 import com.kumuluz.ee.rest.beans.QueryParameters;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
+import org.eclipse.microprofile.openapi.annotations.headers.Header;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
+import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import si.fri.prpo.polnilnice.dtos.PolnilnicaDTO;
 import si.fri.prpo.polnilnice.entitete.Polnilnica;
 import si.fri.prpo.polnilnice.zrna.PolnilniceZrno;
@@ -30,6 +39,13 @@ public class PolnilniceVir {
     @Inject
     private UpravljanjePolnilnicZrno upravljanjePolnilnicZrno;
 
+    @Operation(summary = "Pridobi podatke o vseh polnilnicah", description = "Vrne podatke o vseh polnilnicah.")
+    @APIResponses({
+            @APIResponse(description = "Seznam polnilnic",
+                    responseCode = "200",
+                    content = @Content(schema = @Schema(implementation = Polnilnica.class, type = SchemaType.ARRAY)),
+                    headers = {@Header(name = "X-Total-Count", description = "Število vseh polnilnic v DB")})
+    })
     @GET
     public Response vrniPolnilnice(){
         QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
@@ -42,9 +58,20 @@ public class PolnilniceVir {
                 .build();
     }
 
+    @Operation(summary = "Pridobi podatke o polnilnici z ID-jem 'id'", description = "Vrne podatke o polnilnici z podanim ID-jem.")
+    @APIResponses({
+            @APIResponse(description = "Podatki o polnilnici",
+                    responseCode = "200",
+                    content = @Content(schema = @Schema(implementation = Polnilnica.class))),
+            @APIResponse(description = "Polnilnica not found",
+                    responseCode = "404")
+    })
     @Path("/{id}")
     @GET
-    public Response vrniPolnilnico(@PathParam(value = "id") Long id) {
+    public Response vrniPolnilnico(
+            @Parameter(
+                    description = "identifikator polnilnice, ki jo hočemo pridobiti",
+                    required = true) @PathParam(value = "id") Long id) {
         Polnilnica polnilnica = polnilniceZrno.getPolnilnica(id);
         return Response
                 .status(Response.Status.OK)
@@ -52,44 +79,64 @@ public class PolnilniceVir {
                 .build();
     }
 
+    @Operation(summary = "Posodobi osnovne podatke o polnilnici z ID-jem 'id'.",
+            description = "Posodobi podatke o polnilnici z podanim ID-jem.")
+    @APIResponses({
+            @APIResponse(description = "Polnilnica je uspešno posodobljen",
+                    responseCode = "200",
+                    content = @Content(schema = @Schema(implementation = Polnilnica.class))),
+            @APIResponse(description = "Polnilnica not found",
+                    responseCode = "404")
+    })
     @Path("/{id}")
     @PUT
-    /*public Response posodobiPolnilnico(@PathParam(value = "id") Long id, Polnilnica p) {
-        return Response
-                .status(Response.Status.OK)
-                .entity(polnilniceZrno.updatePolnilnica(id, p))
-                .build();
-    }*/
-    public Response posodobiPolnilnico(@PathParam(value = "id") Long id, PolnilnicaDTO p) {
+    public Response posodobiPolnilnico(
+            @Parameter(
+                    description = "identifikator polnilnice, ki jo hočemo posodobiti",
+                    required = true) @PathParam(value = "id") Long id,
+            @RequestBody(
+                    description = "DTO objekt z spremenjenimi podatki polnilnice",
+                    required = true,
+                    content = @Content(
+                            schema = @Schema(implementation = Polnilnica.class))) PolnilnicaDTO p) {
         return Response
                 .status(Response.Status.OK)
                 .entity(upravljanjePolnilnicZrno.posodobiOsnovnePodatkePolnilnice(id, p))
                 .build();
     }
 
+    @Operation(summary = "Vstavi novo polnilnico.", description = "Doda novo polnilnico v DB.")
+    @APIResponses({
+            @APIResponse(description = "Polnilnica je uspešno dodan",
+                    responseCode = "201",
+                    content = @Content(schema = @Schema(implementation = Polnilnica.class)))
+    })
     @POST
-    /*public Response vstaviPolnilnico(Polnilnica p) {
-        return Response
-                .status(Response.Status.OK)
-                .entity(polnilniceZrno.createPolnilnica(p))
-                .build();
-    }*/
-    public Response vstaviPolnilnico(PolnilnicaDTO p) {
+    public Response vstaviPolnilnico(
+            @RequestBody(
+                    description = "DTO objekt z podatki o polnilnice",
+                    required = true,
+                    content = @Content(
+                            schema = @Schema(implementation = Polnilnica.class))) PolnilnicaDTO p) {
         return Response
                 .status(Response.Status.OK)
                 .entity(upravljanjePolnilnicZrno.ustvariPolnilnico(p))
                 .build();
     }
 
+    @Operation(summary = "Izbrisi polnilnico.", description = "Izbrise polnilnico iz DB.")
+    @APIResponses({
+            @APIResponse(description = "Polnilnica je uspešno izbrisana",
+                    responseCode = "204"),
+            @APIResponse(description = "Polnilnica not found",
+                    responseCode = "404")
+    })
     @Path("/{id}")
     @DELETE
-    /*public Response izbrisiPolnilnico(@PathParam(value = "id") Long id) {
-        return Response
-                .status(Response.Status.OK)
-                .entity(polnilniceZrno.deletePolnilnica(id))
-                .build();
-    }*/
-    public Response izbrisiPolnilnico(@PathParam(value = "id") Long id) {
+    public Response izbrisiPolnilnico(
+            @Parameter(
+                    description = "identifikator polnilnice, ki jo hočemo izbrisati",
+                    required = true) @PathParam(value = "id") Long id) {
         return Response
                 .status(Response.Status.OK)
                 .entity(upravljanjePolnilnicZrno.izbrisiPolnilnico(id))

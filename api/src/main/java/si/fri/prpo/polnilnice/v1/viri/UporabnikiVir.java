@@ -6,6 +6,8 @@ import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.headers.Header;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
+import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import si.fri.prpo.polnilnice.dtos.UporabnikDTO;
@@ -69,7 +71,10 @@ public class UporabnikiVir {
     })
     @Path("/{id}")
     @GET
-    public Response vrniUporabnika(@PathParam(value = "id") Long id) {
+    public Response vrniUporabnika(
+            @Parameter(
+                description = "identifikator uporabnika, ki ga hočemo pridobiti",
+                required = true) @PathParam(value = "id") Long id) {
         Uporabnik uporabnik = uporabnikiZrno.getUporabnik(id);
         return Response
                 .status(Response.Status.OK)
@@ -77,44 +82,65 @@ public class UporabnikiVir {
                 .build();
     }
 
+
+    @Operation(summary = "Posodobi osnovne podatke o uporabniku z ID-jem 'id'. Osnovni podatki so ime, priimek, email in uporabnisko ime",
+            description = "Posodobi podatke o uporabniku z podanim ID-jem.")
+    @APIResponses({
+            @APIResponse(description = "Uporabnik je uspešno posodobljen",
+                    responseCode = "200",
+                    content = @Content(schema = @Schema(implementation = Uporabnik.class))),
+            @APIResponse(description = "Uporabnik not found",
+                    responseCode = "404")
+    })
     @Path("/{id}")
     @PUT
-    /*public Response posodobiUporabnika(@PathParam(value = "id") Long id, Uporabnik u) {
-        return Response
-                .status(Response.Status.OK)
-                .entity(uporabnikiZrno.updateUporabnik(id, u))
-                .build();
-    }*/
-    public Response posodobiUporabnika(@PathParam(value = "id") Long id, UporabnikDTO u) {
+    public Response posodobiUporabnika(
+            @Parameter(
+                description = "identifikator uporabnika, ki ga hočemo posodobiti",
+                required = true) @PathParam(value = "id") Long id,
+            @RequestBody(
+                description = "DTO objekt z spremenjenimi podatki uporabnika",
+                required = true,
+                content = @Content(
+                    schema = @Schema(implementation = Uporabnik.class))) UporabnikDTO u) {
         return Response
                 .status(Response.Status.OK)
                 .entity(upravljanjeUporabnikovZrno.posodobiOsnovnePodatkeUporabnika(id, u))
                 .build();
     }
 
+    @Operation(summary = "Vstavi novega uporabnika.", description = "Doda novega uporabnika v DB.")
+    @APIResponses({
+            @APIResponse(description = "Uporabnik je uspešno dodan",
+                    responseCode = "201",
+                    content = @Content(schema = @Schema(implementation = Uporabnik.class)))
+    })
     @POST
-    /*public Response vstaviUporabnika(Uporabnik u) {
-        return Response
-                .status(Response.Status.OK)
-                .entity(uporabnikiZrno.createUporabnik(u))
-                .build();
-    }*/
-    public Response vstaviUporabnika(UporabnikDTO u) {
+    public Response vstaviUporabnika(@RequestBody(
+            description = "DTO objekt z podatki o uporabniku",
+            required = true,
+            content = @Content(
+                    schema = @Schema(implementation = Uporabnik.class)))
+                                                 UporabnikDTO u) {
         return Response
                 .status(Response.Status.OK)
                 .entity(upravljanjeUporabnikovZrno.ustvariUporabnika(u))
                 .build();
     }
 
+    @Operation(summary = "Izbrisi uporabnika.", description = "Izbrise uporabnika iz DB.")
+    @APIResponses({
+            @APIResponse(description = "Uporabnik je uspešno izbrisan",
+                    responseCode = "204"),
+            @APIResponse(description = "Uporabnik not found",
+                    responseCode = "404")
+    })
     @Path("/{id}")
     @DELETE
-    /*public Response izbrisiUporabnika(@PathParam(value = "id") Long id) {
-        return Response
-                .status(Response.Status.OK)
-                .entity(uporabnikiZrno.deleteUporabnik(id))
-                .build();
-    }*/
-    public Response izbrisiUporabnika(@PathParam(value = "id") Long id) {
+    public Response izbrisiUporabnika(
+            @Parameter(
+                description = "identifikator uporabnika, ki ga hočemo izbrisati",
+                required = true) @PathParam(value = "id") Long id) {
         return Response
                 .status(Response.Status.OK)
                 .entity(upravljanjeUporabnikovZrno.izbrisiUporabnika(id))
