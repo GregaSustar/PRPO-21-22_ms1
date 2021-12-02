@@ -77,7 +77,7 @@ public class UpravljanjeTerminovZrno {
         termin.setKonec_termina(terminDTO.getKonec_termina());
 
         if(!isAvailableAtPolnilnica(polnilnica, termin) && hasValidInterval(termin)) {
-            log.info("Termin se prekriva z drugim terminom na polnilnici");
+            log.info("Nevaliden termin.");
             return null;
         }
 
