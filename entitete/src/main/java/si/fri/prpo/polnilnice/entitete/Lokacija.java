@@ -1,5 +1,6 @@
 package si.fri.prpo.polnilnice.entitete;
 
+import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.util.List;
@@ -31,9 +32,10 @@ public class Lokacija {
 
     private String naslov;
 
-    @JsonbTransient
+    //@JsonbTransient
+    @JsonbProperty("polnilnice")
     @JoinTable
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Polnilnica> polnilnice;
 
     public Lokacija() {}

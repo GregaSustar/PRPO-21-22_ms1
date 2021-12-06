@@ -30,7 +30,8 @@ public class Termin {
     @OneToOne
     private Uporabnik uporabnik;
 
-    @JsonbProperty("polnilnica")
+    @JsonbTransient
+    //@JsonbProperty("polnilnica")
     @ManyToOne
     private Polnilnica polnilnica;
 

@@ -25,7 +25,8 @@ public class Polnilnica {
 
     private String ime;
 
-    @JsonbProperty(value = "lokacija")
+    @JsonbTransient
+    //@JsonbProperty(value = "lokacija")
     @ManyToOne
     private Lokacija lokacija;
 
@@ -39,7 +40,7 @@ public class Polnilnica {
 
     private Double cena_polnjenja;
 
-    @JsonbTransient
+    //@JsonbTransient
     @JoinTable
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Termin> termini;

@@ -121,5 +121,8 @@ public class JPAServlet extends HttpServlet {
         for (Uporabnik u : uporabniki) {
             resp.getWriter().println(u.toString());
         }
+
+        resp.getWriter().println(polnilnica);
+        resp.getWriter().println(res);
     }
 }

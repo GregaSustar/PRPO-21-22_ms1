@@ -20,3 +20,6 @@ kumuluzee:
       server-auto-config:
         enabled: false
         original-uri-check: false
+  dev:
+    scan-libraries:
+      - entitete

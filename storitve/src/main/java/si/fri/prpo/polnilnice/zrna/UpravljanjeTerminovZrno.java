@@ -5,6 +5,7 @@ import si.fri.prpo.polnilnice.dtos.TerminDTO;
 import si.fri.prpo.polnilnice.entitete.Polnilnica;
 import si.fri.prpo.polnilnice.entitete.Termin;
 import si.fri.prpo.polnilnice.entitete.Uporabnik;
+import si.fri.prpo.polnilnice.izjeme.NeveljavenTerminIzjema;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -76,9 +77,10 @@ public class UpravljanjeTerminovZrno {
         termin.setZacetek_termina(terminDTO.getZacetek_termina());
         termin.setKonec_termina(terminDTO.getKonec_termina());
 
-        if(!isAvailableAtPolnilnica(polnilnica, termin) && hasValidInterval(termin)) {
+        if(!isAvailableAtPolnilnica(polnilnica, termin) || !hasValidInterval(termin)) {
             log.info("Nevaliden termin.");
-            return null;
+            throw new NeveljavenTerminIzjema("Neveljaven Termin");
+            //return null;
         }
 
         termin = terminiZrno.createTermin(termin);
@@ -123,6 +125,9 @@ public class UpravljanjeTerminovZrno {
     public boolean isAvailableAtPolnilnica(Polnilnica p, Termin t) {
 
         List<Termin> termini = p.getTermini();
+        if(termini == null)
+            return true;
+
         for (Termin iter_t : termini) {
             if(isOverlapping(t, iter_t))
                 return false;
