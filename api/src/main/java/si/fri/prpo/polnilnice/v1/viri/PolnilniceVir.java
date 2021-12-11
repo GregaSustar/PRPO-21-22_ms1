@@ -1,6 +1,7 @@
 package si.fri.prpo.polnilnice.v1.viri;
 
 import com.kumuluz.ee.rest.beans.QueryParameters;
+import com.kumuluz.ee.security.annotations.Secure;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.headers.Header;
@@ -10,11 +11,14 @@ import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
+import si.fri.prpo.polnilnice.dtos.OcenaDTO;
 import si.fri.prpo.polnilnice.dtos.PolnilnicaDTO;
 import si.fri.prpo.polnilnice.entitete.Polnilnica;
 import si.fri.prpo.polnilnice.zrna.PolnilniceZrno;
 import si.fri.prpo.polnilnice.zrna.UpravljanjePolnilnicZrno;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -24,6 +28,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.util.List;
 
+@Secure
 @Path("polnilnice")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -39,6 +44,7 @@ public class PolnilniceVir {
     @Inject
     private UpravljanjePolnilnicZrno upravljanjePolnilnicZrno;
 
+    @PermitAll
     @Operation(summary = "Pridobi podatke o vseh polnilnicah", description = "Vrne podatke o vseh polnilnicah.")
     @APIResponses({
             @APIResponse(description = "Seznam polnilnic",
@@ -58,6 +64,7 @@ public class PolnilniceVir {
                 .build();
     }
 
+    @PermitAll
     @Operation(summary = "Pridobi podatke o polnilnici z ID-jem 'id'", description = "Vrne podatke o polnilnici z podanim ID-jem.")
     @APIResponses({
             @APIResponse(description = "Podatki o polnilnici",
@@ -73,12 +80,15 @@ public class PolnilniceVir {
                     description = "identifikator polnilnice, ki jo hočemo pridobiti",
                     required = true) @PathParam(value = "id") Long id) {
         Polnilnica polnilnica = polnilniceZrno.getPolnilnica(id);
+        List<OcenaDTO> ocene = polnilniceZrno.pridobiOcene(id);
+        PolnilnicaDTO p = new PolnilnicaDTO(polnilnica, ocene);
         return Response
                 .status(Response.Status.OK)
-                .entity(polnilnica)
+                .entity(p)
                 .build();
     }
 
+    @RolesAllowed("user")
     @Operation(summary = "Posodobi osnovne podatke o polnilnici z ID-jem 'id'.",
             description = "Posodobi podatke o polnilnici z podanim ID-jem.")
     @APIResponses({
@@ -105,6 +115,7 @@ public class PolnilniceVir {
                 .build();
     }
 
+    @RolesAllowed("user")
     @Operation(summary = "Vstavi novo polnilnico.", description = "Doda novo polnilnico v DB.")
     @APIResponses({
             @APIResponse(description = "Polnilnica je uspešno dodan",
@@ -124,6 +135,7 @@ public class PolnilniceVir {
                 .build();
     }
 
+    @RolesAllowed("admin")
     @Operation(summary = "Izbrisi polnilnico.", description = "Izbrise polnilnico iz DB.")
     @APIResponses({
             @APIResponse(description = "Polnilnica je uspešno izbrisana",

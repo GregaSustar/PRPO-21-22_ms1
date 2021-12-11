@@ -23,3 +23,15 @@ kumuluzee:
   dev:
     scan-libraries:
       - entitete
+  security:
+    keycloak:
+      json:
+        '{"realm": "polnilnice-realm",
+            "bearer-only": true,
+            "auth-server-url": "http://localhost:8082/auth/",
+            "ssl-required": "external",
+            "resource": "polnilnice-api",
+            "confidential-port": 0}'
+integrations:
+  ocenepolnilnic:
+    baseurl: "http://localhost:8081/v1"

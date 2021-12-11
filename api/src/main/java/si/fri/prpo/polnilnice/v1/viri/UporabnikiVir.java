@@ -15,6 +15,8 @@ import si.fri.prpo.polnilnice.entitete.Uporabnik;
 import si.fri.prpo.polnilnice.zrna.UporabnikiZrno;
 import si.fri.prpo.polnilnice.zrna.UpravljanjeUporabnikovZrno;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -41,6 +43,7 @@ public class UporabnikiVir {
     private UpravljanjeUporabnikovZrno upravljanjeUporabnikovZrno;
 
 
+    @PermitAll
     @Operation(summary = "Pridobi podatke o vseh uporabnikih", description = "Vrne podatke o vseh uporabnikih.")
     @APIResponses({
             @APIResponse(description = "Seznam uporabnikov",
@@ -61,6 +64,7 @@ public class UporabnikiVir {
     }
 
 
+    @PermitAll
     @Operation(summary = "Pridobi podatke o uporabniku z ID-jem 'id'", description = "Vrne podatke o uporabniku z podanim ID-jem.")
     @APIResponses({
             @APIResponse(description = "Podatki o uporabniku",
@@ -83,6 +87,7 @@ public class UporabnikiVir {
     }
 
 
+    @RolesAllowed("user")
     @Operation(summary = "Posodobi osnovne podatke o uporabniku z ID-jem 'id'. Osnovni podatki so ime, priimek, email in uporabnisko ime",
             description = "Posodobi podatke o uporabniku z podanim ID-jem.")
     @APIResponses({
@@ -109,6 +114,7 @@ public class UporabnikiVir {
                 .build();
     }
 
+    @RolesAllowed("admin")
     @Operation(summary = "Vstavi novega uporabnika.", description = "Doda novega uporabnika v DB.")
     @APIResponses({
             @APIResponse(description = "Uporabnik je uspešno dodan",
@@ -128,6 +134,7 @@ public class UporabnikiVir {
                 .build();
     }
 
+    @RolesAllowed("admin")
     @Operation(summary = "Izbrisi uporabnika.", description = "Izbrise uporabnika iz DB.")
     @APIResponses({
             @APIResponse(description = "Uporabnik je uspešno izbrisan",

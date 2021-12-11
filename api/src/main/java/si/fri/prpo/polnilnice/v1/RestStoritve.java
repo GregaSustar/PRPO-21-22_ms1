@@ -6,7 +6,11 @@ import org.eclipse.microprofile.openapi.annotations.info.Info;
 import org.eclipse.microprofile.openapi.annotations.info.License;
 import org.eclipse.microprofile.openapi.annotations.servers.Server;
 
+import javax.annotation.security.DeclareRoles;
 import javax.ws.rs.ApplicationPath;
+
+
+@DeclareRoles({"user", "admin"})
 @ApplicationPath("v1")
 @OpenAPIDefinition(info = @Info(title = "PolnilniceAPI", version = "v1",
         contact = @Contact(email = "gs1121@student.uni-lj.si"),

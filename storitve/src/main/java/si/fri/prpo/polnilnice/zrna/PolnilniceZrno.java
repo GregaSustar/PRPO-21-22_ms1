@@ -1,20 +1,25 @@
 package si.fri.prpo.polnilnice.zrna;
 
+import com.kumuluz.ee.configuration.utils.ConfigurationUtil;
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import com.kumuluz.ee.rest.utils.JPAUtils;
+import si.fri.prpo.polnilnice.dtos.OcenaDTO;
 import si.fri.prpo.polnilnice.entitete.Lokacija;
 import si.fri.prpo.polnilnice.entitete.Polnilnica;
-import si.fri.prpo.polnilnice.entitete.Termin;
 import si.fri.prpo.polnilnice.entitete.Uporabnik;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+import javax.ws.rs.ProcessingException;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.core.MediaType;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -29,9 +34,16 @@ public class PolnilniceZrno {
 
     private static final UUID uuid = UUID.randomUUID();
 
+    private Client httpClient;
+
+    private String baseUrl;
+
     @PostConstruct
     private void init() {
         log.info("Initialized: " + UporabnikiZrno.class.getName() + ", UUID: " + uuid);
+
+        httpClient = ClientBuilder.newClient();
+        baseUrl = ConfigurationUtil.getInstance().get("integrations.ocenepolnilnic.baseurl").get();
     }
 
     @PreDestroy
@@ -104,5 +116,12 @@ public class PolnilniceZrno {
             return true;
         }
         return false;
+    }
+
+    public List<OcenaDTO> pridobiOcene(Long id) throws WebApplicationException, ProcessingException {
+        return httpClient
+                .target(baseUrl + "/ocene/" + id)
+                .request(MediaType.APPLICATION_JSON)
+                .get(List.class);
     }
 }

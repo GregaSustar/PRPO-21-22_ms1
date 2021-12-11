@@ -21,6 +21,30 @@ public class PolnilnicaDTO {
     private Double moc_v_kW;
     private Polnilnica.Tok vrsta_toka;
 
+    private List<OcenaDTO> ocene;
+
+    public PolnilnicaDTO(Polnilnica p, List<OcenaDTO> ocene) {
+        this.id = p.getId();
+        this.ime = p.getIme();
+        this.lokacija = p.getLokacija();
+        this.cas_odprtja = p.getCas_odprtja();
+        this.cas_zaprtja = p.getCas_zaprtja();
+        this.lastnik = p.getLastnik();
+        this.termini = p.getTermini();
+        this.cena_polnjenja = p.getCena_polnjenja();
+        this.moc_v_kW = p.getMoc_v_kW();
+        this.vrsta_toka = p.getVrsta_toka();
+        this.ocene = ocene;
+    }
+
+    public List<OcenaDTO> getOcene() {
+        return ocene;
+    }
+
+    public void setOcene(List<OcenaDTO> ocene) {
+        this.ocene = ocene;
+    }
+
     public Long getId() {
         return id;
     }
