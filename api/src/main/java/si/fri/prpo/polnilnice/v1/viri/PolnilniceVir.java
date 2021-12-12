@@ -28,7 +28,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.util.List;
 
-@Secure
+//@Secure
 @Path("polnilnice")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -44,7 +44,7 @@ public class PolnilniceVir {
     @Inject
     private UpravljanjePolnilnicZrno upravljanjePolnilnicZrno;
 
-    @PermitAll
+    //@PermitAll
     @Operation(summary = "Pridobi podatke o vseh polnilnicah", description = "Vrne podatke o vseh polnilnicah.")
     @APIResponses({
             @APIResponse(description = "Seznam polnilnic",
@@ -64,7 +64,7 @@ public class PolnilniceVir {
                 .build();
     }
 
-    @PermitAll
+    //@PermitAll
     @Operation(summary = "Pridobi podatke o polnilnici z ID-jem 'id'", description = "Vrne podatke o polnilnici z podanim ID-jem.")
     @APIResponses({
             @APIResponse(description = "Podatki o polnilnici",
@@ -88,7 +88,7 @@ public class PolnilniceVir {
                 .build();
     }
 
-    @RolesAllowed("user")
+    //@RolesAllowed("user")
     @Operation(summary = "Posodobi osnovne podatke o polnilnici z ID-jem 'id'.",
             description = "Posodobi podatke o polnilnici z podanim ID-jem.")
     @APIResponses({
@@ -115,7 +115,7 @@ public class PolnilniceVir {
                 .build();
     }
 
-    @RolesAllowed("user")
+    //@RolesAllowed("user")
     @Operation(summary = "Vstavi novo polnilnico.", description = "Doda novo polnilnico v DB.")
     @APIResponses({
             @APIResponse(description = "Polnilnica je uspešno dodan",
@@ -135,7 +135,7 @@ public class PolnilniceVir {
                 .build();
     }
 
-    @RolesAllowed("admin")
+    //@RolesAllowed("admin")
     @Operation(summary = "Izbrisi polnilnico.", description = "Izbrise polnilnico iz DB.")
     @APIResponses({
             @APIResponse(description = "Polnilnica je uspešno izbrisana",
