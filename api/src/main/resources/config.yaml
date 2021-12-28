@@ -5,7 +5,8 @@ kumuluzee:
     name: dev
   datasources:
     - jndi-name: jdbc/PolnilniceDS
-      connection-url: jdbc:postgresql://localhost:5432/polnilnice
+      #connection-url: jdbc:postgresql://localhost:5432/polnilnice
+      connection-url: jdbc:postgresql://host.docker.internal:5432/postgres
       username: postgres
       password: postgres
   openapi-mp:
@@ -35,7 +36,8 @@ kumuluzee:
   health:
     checks:
       data-source-health-check:
-        connection-url: jdbc:postgresql://localhost:5432/polnilnice
+        #connection-url: jdbc:postgresql://localhost:5432/polnilnice
+        connection-url: jdbc:postgresql://host.docker.internal:5432/postgres
         username: postgres
         password: postgres
         type: both
