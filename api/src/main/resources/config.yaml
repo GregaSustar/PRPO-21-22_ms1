@@ -32,6 +32,19 @@ kumuluzee:
             "ssl-required": "external",
             "resource": "polnilnice-api",
             "confidential-port": 0}'
+  health:
+    checks:
+      data-source-health-check:
+        connection-url: jdbc:postgresql://localhost:5432/polnilnice
+        username: postgres
+        password: postgres
+        type: both
+      http-health-check:
+        connection-url: http://localhost:8080/servlet
+        type: liveness
+      disk-space-health-check:
+        threshold: 100
+        type: readiness
 integrations:
   ocenepolnilnic:
     baseurl: "http://localhost:8081/v1"
