@@ -49,4 +49,5 @@ kumuluzee:
         type: readiness
 integrations:
   ocenepolnilnic:
-    baseurl: "http://localhost:8081/v1"
+    #baseurl: "http://localhost:8081/v1"
+    baseurl: "http://host.docker.internal:8081/v1"
