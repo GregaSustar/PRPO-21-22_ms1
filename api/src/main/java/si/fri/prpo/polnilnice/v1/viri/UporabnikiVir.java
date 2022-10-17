@@ -28,11 +28,11 @@ import javax.ws.rs.core.UriInfo;
 import java.util.ArrayList;
 import java.util.List;
 
+@ApplicationScoped
 @Path("uporabniki")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-@CrossOrigin(supportedMethods = "GET, POST, HEAD, DELETE, OPTIONS")
-@ApplicationScoped
+@CrossOrigin(supportedMethods =  "GET, POST, PUT, DELETE, HEAD, OPTIONS")
 public class UporabnikiVir {
 
     @Context

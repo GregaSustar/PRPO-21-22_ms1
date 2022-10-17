@@ -30,11 +30,11 @@ import javax.ws.rs.core.UriInfo;
 import java.util.List;
 
 //@Secure
+@ApplicationScoped
 @Path("polnilnice")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-@CrossOrigin(supportedMethods = "GET, POST, HEAD, DELETE, OPTIONS")
-@ApplicationScoped
+@CrossOrigin(supportedMethods =  "GET, POST, PUT, DELETE, HEAD, OPTIONS")
 public class PolnilniceVir {
 
     @Context
@@ -62,6 +62,12 @@ public class PolnilniceVir {
         return Response
                 .status(Response.Status.OK)
                 .header("X-Total-Count", polnilniceCount)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Credentials", "true")
+                .header("Access-Control-Allow-Headers",
+                        "origin, content-type, accept, authorization")
+                .header("Access-Control-Allow-Methods",
+                        "GET, POST, PUT, DELETE, OPTIONS, HEAD")
                 .entity(polnilnice)
                 .build();
     }
@@ -86,6 +92,12 @@ public class PolnilniceVir {
         PolnilnicaDTO p = new PolnilnicaDTO(polnilnica, ocene);
         return Response
                 .status(Response.Status.OK)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Credentials", "true")
+                .header("Access-Control-Allow-Headers",
+                        "origin, content-type, accept, authorization")
+                .header("Access-Control-Allow-Methods",
+                        "GET, POST, PUT, DELETE, OPTIONS, HEAD")
                 .entity(p)
                 .build();
     }

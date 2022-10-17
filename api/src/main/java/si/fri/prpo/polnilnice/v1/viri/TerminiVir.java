@@ -25,11 +25,11 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.util.List;
 
+@ApplicationScoped
 @Path("termini")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-@CrossOrigin(supportedMethods = "GET, POST, HEAD, DELETE, OPTIONS")
-@ApplicationScoped
+@CrossOrigin(supportedMethods =  "GET, POST, PUT, DELETE, HEAD, OPTIONS")
 public class TerminiVir {
 
     @Context
@@ -55,7 +55,11 @@ public class TerminiVir {
         Long terminiCount = terminiZrno.getTerminiCount(query);
         return Response
                 .status(Response.Status.OK)
-                .header("X-Total-Count", terminiCount)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+                .header("Access-Control-Max-Age", "3600")
+                .header("Access-Control-Allow-Headers", "X-PINGOTHER,Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization")
+                .header("Access-Control-Expose-Headers", "xsrf-token")
                 .entity(termini)
                 .build();
     }
@@ -77,6 +81,11 @@ public class TerminiVir {
         Termin termin = terminiZrno.getTermin(id);
         return Response
                 .status(Response.Status.OK)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+                .header("Access-Control-Max-Age", "3600")
+                .header("Access-Control-Allow-Headers", "X-PINGOTHER,Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization")
+                .header("Access-Control-Expose-Headers", "xsrf-token")
                 .entity(termin)
                 .build();
     }
@@ -96,6 +105,11 @@ public class TerminiVir {
                     schema = @Schema(implementation = Termin.class))) TerminDTO t) {
         return Response
                 .status(Response.Status.OK)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+                .header("Access-Control-Max-Age", "3600")
+                .header("Access-Control-Allow-Headers", "X-PINGOTHER,Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization")
+                .header("Access-Control-Expose-Headers", "xsrf-token")
                 .entity(upravljanjeTerminovZrno.ustvariTermin(t))
                 .build();
     }
@@ -115,6 +129,11 @@ public class TerminiVir {
                     required = true) @PathParam(value = "id") Long id) {
         return Response
                 .status(Response.Status.OK)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+                .header("Access-Control-Max-Age", "3600")
+                .header("Access-Control-Allow-Headers", "X-PINGOTHER,Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization")
+                .header("Access-Control-Expose-Headers", "xsrf-token")
                 .entity(upravljanjeTerminovZrno.izbrisiTermin(id))
                 .build();
     }

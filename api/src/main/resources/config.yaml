@@ -5,8 +5,8 @@ kumuluzee:
     name: dev
   datasources:
     - jndi-name: jdbc/PolnilniceDS
-      #connection-url: jdbc:postgresql://localhost:5432/polnilnice
-      connection-url: jdbc:postgresql://host.docker.internal:5432/postgres
+      connection-url: jdbc:postgresql://localhost:5432/polnilnice
+      #connection-url: jdbc:postgresql://host.docker.internal:5432/postgres
       username: postgres
       password: postgres
   openapi-mp:
@@ -27,27 +27,27 @@ kumuluzee:
   security:
     keycloak:
       json:
-        '{"realm": "polnilnice-realm",
-            "bearer-only": true,
-            "auth-server-url": "http://localhost:8082/auth/",
-            "ssl-required": "external",
-            "resource": "polnilnice-api",
-            "confidential-port": 0}'
+        '{ "realm": "polnilnice-realm",
+           "bearer-only": true,
+           "auth-server-url": "http://localhost:8082/auth/",
+           "ssl-required": "external",
+           "resource": "polnilnice-api",
+           "confidential-port": 0 }'
   health:
     checks:
       data-source-health-check:
-        #connection-url: jdbc:postgresql://localhost:5432/polnilnice
-        connection-url: jdbc:postgresql://host.docker.internal:5432/postgres
+        connection-url: jdbc:postgresql://localhost:5432/polnilnice
+        #connection-url: jdbc:postgresql://host.docker.internal:5432/postgres
         username: postgres
         password: postgres
         type: both
       http-health-check:
-        connection-url: http://localhost:8080/servlet
+        connection-url: http://localhost:8080/v1/polnilnice
         type: liveness
       disk-space-health-check:
         threshold: 100
         type: readiness
 integrations:
   ocenepolnilnic:
-    #baseurl: "http://localhost:8081/v1"
-    baseurl: "http://host.docker.internal:8081/v1"
+    baseurl: "http://localhost:8081/v1"
+    #baseurl: "http://host.docker.internal:8081/v1"

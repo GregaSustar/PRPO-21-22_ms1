@@ -26,12 +26,11 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.util.List;
 
-
+@ApplicationScoped
 @Path("lokacije")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-@CrossOrigin(supportedMethods = "GET, POST, HEAD, DELETE, OPTIONS")
-@ApplicationScoped
+@CrossOrigin(supportedMethods =  "GET, POST, PUT, DELETE")
 public class LokacijeVir {
 
     @Context

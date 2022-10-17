@@ -91,7 +91,7 @@ public class JPAServlet extends HttpServlet {
         terminDTO.setKonec_termina(end);
 
         Termin termin = upravljanjeTerminovZrno.ustvariTermin(terminDTO);
-        racunanjeCeneZrno.izracunajCeno(termin);
+        //racunanjeCeneZrno.izracunajCeno(termin);
 
         resp.getWriter().println("Dodaj termin uporabniku");
         resp.getWriter().println("_______________________________");
@@ -100,7 +100,7 @@ public class JPAServlet extends HttpServlet {
             resp.getWriter().println(u.toString());
         }
 
-        resp.getWriter().println("\n\n");
+        /*resp.getWriter().println("\n\n");
 
         upravljanjeUporabnikovZrno.izbrisiUporabnika(res.getId());
 
@@ -111,9 +111,9 @@ public class JPAServlet extends HttpServlet {
             resp.getWriter().println(u.toString());
         }
 
-        resp.getWriter().println("\n\n");
+        resp.getWriter().println("\n\n");*/
 
-        upravljanjeTerminovZrno.izbrisiTermin(1L);
+        /*upravljanjeTerminovZrno.izbrisiTermin(1L);
 
         resp.getWriter().println("izbris termin");
         resp.getWriter().println("_______________________________");
@@ -123,6 +123,6 @@ public class JPAServlet extends HttpServlet {
         }
 
         resp.getWriter().println(polnilnica);
-        resp.getWriter().println(res);
+        resp.getWriter().println(res);*/
     }
 }
